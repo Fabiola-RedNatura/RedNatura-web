@@ -73,7 +73,7 @@
                 </div>
                 <div class="info-item">
                     <span class="icon">📧</span>
-                    <p><strong>Email:</strong><br>Agregará después</p>
+                    <p><strong>Email:</strong><br>fabiola250204@gmail.com</p>
                 </div>
                 <div class="info-item">
                     <span class="icon">💬</span>
@@ -93,6 +93,14 @@
         <div class="chat-input-area">
             <input type="text" id="chat-input" placeholder="Escribe tu pregunta..." onkeypress="handleChatInput(event)">
             <button onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
+
+    <!-- Modal de Detalles de Producto -->
+    <div id="producto-modal" class="modal hidden">
+        <div class="modal-content producto-detail">
+            <span class="close-modal" onclick="cerrarDetalles()">&times;</span>
+            <div id="producto-detalle"></div>
         </div>
     </div>
 
