@@ -44,6 +44,13 @@ body {
     opacity: 0.9;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
 .nav-links {
     display: flex;
     list-style: none;
