@@ -19,7 +19,7 @@ body {
 
 /* Navegación */
 .navbar {
-    background: linear-gradient(135deg, #2c3e7f 0%, #1a4d8f 100%);
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
     color: white;
     padding: 1rem 0;
     position: sticky;
@@ -78,7 +78,7 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, #2c3e7f 0%, #1a4d8f 100%);
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
     color: white;
     padding: 100px 20px;
     text-align: center;
