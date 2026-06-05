@@ -19,7 +19,7 @@ body {
 
 /* Navegación */
 .navbar {
-    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+    background: linear-gradient(135deg, #2c3e7f 0%, #1a4d8f 100%);
     color: white;
     padding: 1rem 0;
     position: sticky;
@@ -62,7 +62,7 @@ body {
 }
 
 .chat-btn {
-    background-color: #f39c12;
+    background-color: #3498db;
     color: white;
     border: none;
     padding: 0.7rem 1.5rem;
@@ -73,12 +73,12 @@ body {
 }
 
 .chat-btn:hover {
-    background-color: #e67e22;
+    background-color: #2980b9;
 }
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+    background: linear-gradient(135deg, #2c3e7f 0%, #1a4d8f 100%);
     color: white;
     padding: 100px 20px;
     text-align: center;
@@ -108,7 +108,7 @@ body {
 }
 
 .cta-btn {
-    background-color: #f39c12;
+    background-color: #3498db;
     color: white;
     border: none;
     padding: 1rem 2.5rem;
@@ -121,7 +121,7 @@ body {
 }
 
 .cta-btn:hover {
-    background-color: #e67e22;
+    background-color: #2980b9;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
 }
@@ -136,7 +136,7 @@ body {
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
-    color: #27ae60;
+    color: #2c3e7f;
 }
 
 .productos .descripcion {
@@ -156,9 +156,9 @@ body {
 
 .filtro-btn {
     padding: 0.7rem 1.5rem;
-    border: 2px solid #27ae60;
+    border: 2px solid #2c3e7f;
     background-color: white;
-    color: #27ae60;
+    color: #2c3e7f;
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s;
@@ -167,7 +167,7 @@ body {
 
 .filtro-btn:hover,
 .filtro-btn.active {
-    background-color: #27ae60;
+    background-color: #2c3e7f;
     color: white;
 }
 
@@ -190,7 +190,7 @@ body {
 .producto-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    border-color: #27ae60;
+    border-color: #3498db;
 }
 
 .producto-card .emoji {
@@ -199,96 +199,92 @@ body {
 }
 
 .producto-card h3 {
-    color: #27ae60;
+    color: #2c3e7f;
     margin-bottom: 0.5rem;
-    font-size: 1.3rem;
-}
-
-.producto-card .precio {
-    font-size: 1.8rem;
-    color: #f39c12;
-    font-weight: bold;
-    margin: 1rem 0;
 }
 
 .producto-card p {
     color: #666;
     font-size: 0.9rem;
     margin-bottom: 1rem;
-    min-height: 60px;
+}
+
+.precio {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #3498db;
+    margin: 1rem 0;
 }
 
 .btn-producto {
-    background-color: #27ae60;
+    background-color: #3498db;
     color: white;
     border: none;
     padding: 0.7rem 1.5rem;
     border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
 }
 
 .btn-producto:hover {
-    background-color: #229954;
+    background-color: #2980b9;
+    transform: scale(1.05);
 }
 
 /* Sección Sucursales */
 .sucursales {
     padding: 60px 20px;
-    background: linear-gradient(135deg, #f0f9f7 0%, #e8f8f5 100%);
+    background: linear-gradient(135deg, #f8f9fa 0%, #ecf0f1 100%);
 }
 
 .sucursales h2 {
     text-align: center;
     font-size: 2.5rem;
-    color: #27ae60;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    color: #2c3e7f;
 }
 
 .sucursales > .container > p {
     text-align: center;
-    font-size: 1.1rem;
     color: #666;
-    margin-bottom: 0.5rem;
+    margin-bottom: 2rem;
 }
 
-.sucursales .horario {
+.horario {
     text-align: center;
-    font-size: 1rem;
-    color: #27ae60;
-    font-weight: 600;
-    margin-bottom: 2rem;
+    color: #3498db;
+    font-weight: bold;
+    margin-bottom: 2rem !important;
 }
 
 .sucursales-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 2rem;
 }
 
 .sucursal-card {
     background: white;
+    border-left: 4px solid #3498db;
+    border-radius: 8px;
     padding: 1.5rem;
-    border-radius: 10px;
-    text-align: center;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    border-left: 4px solid #27ae60;
     transition: all 0.3s;
 }
 
 .sucursal-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 
 .sucursal-card h3 {
-    color: #27ae60;
+    color: #2c3e7f;
     margin-bottom: 0.5rem;
 }
 
 .sucursal-card p {
     color: #666;
-    font-size: 0.95rem;
+    margin: 0.5rem 0;
 }
 
 /* Sección Contacto */
@@ -300,41 +296,40 @@ body {
 .contacto h2 {
     text-align: center;
     font-size: 2.5rem;
-    color: #27ae60;
     margin-bottom: 1rem;
+    color: #2c3e7f;
 }
 
 .contacto > .container > p {
     text-align: center;
     color: #666;
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
+    margin-bottom: 3rem;
 }
 
 .contacto-info {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    margin-bottom: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .info-item {
-    background: linear-gradient(135deg, #f0f9f7 0%, #e8f8f5 100%);
-    padding: 2rem;
-    border-radius: 10px;
     text-align: center;
-    border-left: 4px solid #27ae60;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ecf0f1 100%);
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.info-item:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .info-item .icon {
-    font-size: 2.5rem;
+    font-size: 3rem;
     display: block;
     margin-bottom: 1rem;
-}
-
-.info-item p {
-    color: #666;
-    line-height: 1.8;
 }
 
 /* Chatbot */
@@ -342,11 +337,11 @@ body {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 400px;
-    max-height: 600px;
+    width: 350px;
+    height: 500px;
     background: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+    border-radius: 15px;
+    box-shadow: 0 5px 40px rgba(0,0,0,0.3);
     display: flex;
     flex-direction: column;
     z-index: 1000;
@@ -357,14 +352,34 @@ body {
     display: none;
 }
 
+.chatbot-container.show {
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 .chatbot-header {
-    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+    background: linear-gradient(135deg, #2c3e7f 0%, #1a4d8f 100%);
     color: white;
-    padding: 1rem;
-    border-radius: 10px 10px 0 0;
+    padding: 1.5rem;
+    border-radius: 15px 15px 0 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.chatbot-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
 }
 
 .close-btn {
@@ -373,6 +388,11 @@ body {
     color: white;
     font-size: 1.5rem;
     cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.close-btn:hover {
+    transform: scale(1.2);
 }
 
 .chat-messages {
@@ -384,23 +404,29 @@ body {
 
 .message {
     margin-bottom: 1rem;
-    padding: 0.8rem;
-    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
     max-width: 85%;
     word-wrap: break-word;
+    line-height: 1.4;
 }
 
 .message.user {
-    background-color: #27ae60;
+    background-color: #3498db;
     color: white;
     margin-left: auto;
     text-align: right;
 }
 
 .message.bot {
-    background-color: #e0e0e0;
+    background-color: #ecf0f1;
     color: #333;
     margin-right: auto;
+}
+
+.message.bot strong {
+    color: #2c3e7f;
+    font-weight: 700;
 }
 
 .chat-input-area {
@@ -408,35 +434,40 @@ body {
     gap: 0.5rem;
     padding: 1rem;
     border-top: 1px solid #e0e0e0;
+    background-color: white;
+    border-radius: 0 0 15px 15px;
 }
 
 .chat-input-area input {
     flex: 1;
-    padding: 0.7rem;
     border: 1px solid #ddd;
     border-radius: 20px;
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
     outline: none;
+    transition: border-color 0.3s;
 }
 
 .chat-input-area input:focus {
-    border-color: #27ae60;
+    border-color: #3498db;
 }
 
 .chat-input-area button {
-    background-color: #27ae60;
+    background-color: #3498db;
     color: white;
     border: none;
-    padding: 0.7rem 1.2rem;
+    padding: 0.7rem 1.5rem;
     border-radius: 20px;
     cursor: pointer;
     font-weight: bold;
+    transition: background-color 0.3s;
 }
 
 .chat-input-area button:hover {
-    background-color: #229954;
+    background-color: #2980b9;
 }
 
-/* Modal de Registro */
+/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -446,16 +477,22 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.5);
-    align-items: center;
-    justify-content: center;
-}
-
-.modal.hidden {
-    display: none !important;
+    animation: fadeIn 0.3s;
 }
 
 .modal.show {
-    display: flex !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .modal-content {
@@ -464,7 +501,13 @@ body {
     border-radius: 10px;
     width: 90%;
     max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
     position: relative;
+}
+
+.modal-content.producto-detail {
+    max-width: 700px;
 }
 
 .close-modal {
@@ -474,12 +517,16 @@ body {
     font-size: 2rem;
     cursor: pointer;
     color: #999;
+    transition: color 0.3s;
+}
+
+.close-modal:hover {
+    color: #333;
 }
 
 .modal-content h2 {
-    color: #27ae60;
+    color: #2c3e7f;
     margin-bottom: 1.5rem;
-    text-align: center;
 }
 
 .modal-content form {
@@ -493,76 +540,65 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
+    outline: none;
 }
 
 .modal-content input:focus {
-    outline: none;
-    border-color: #27ae60;
-    box-shadow: 0 0 5px rgba(39, 174, 96, 0.3);
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
 }
 
 .btn-submit {
-    background-color: #27ae60;
+    background-color: #3498db;
     color: white;
-    padding: 0.8rem;
+    padding: 0.9rem;
     border: none;
     border-radius: 5px;
-    font-size: 1rem;
-    font-weight: bold;
     cursor: pointer;
+    font-weight: bold;
     transition: background-color 0.3s;
 }
 
 .btn-submit:hover {
-    background-color: #229954;
+    background-color: #2980b9;
 }
 
 /* Footer */
 .footer {
-    background-color: #27ae60;
+    background: linear-gradient(135deg, #2c3e7f 0%, #1a4d8f 100%);
     color: white;
     text-align: center;
     padding: 2rem;
     margin-top: 3rem;
 }
 
-/* Responsivo */
+/* Responsive */
 @media (max-width: 768px) {
-    .nav-links {
-        gap: 1rem;
-        flex-wrap: wrap;
-    }
-    
     .hero-content h1 {
         font-size: 2rem;
     }
     
-    .hero-content p {
-        font-size: 1rem;
+    .productos h2,
+    .sucursales h2,
+    .contacto h2 {
+        font-size: 1.8rem;
     }
     
-    .productos-grid,
-    .sucursales-grid {
-        grid-template-columns: 1fr;
+    .nav-links {
+        gap: 1rem;
+        font-size: 0.9rem;
     }
     
     .chatbot-container {
-        width: 90%;
-        max-width: 100%;
-        bottom: 10px;
-        right: 10px;
-        left: 10px;
-    }
-    
-    .filtros {
-        flex-direction: column;
-    }
-    
-    .filtro-btn {
         width: 100%;
+        height: 100%;
+        right: 0;
+        bottom: 0;
+        border-radius: 0;
     }
     
-    .chat-input-area {
-        flex-wrap: wrap;
+    .modal-content {
+        width: 95%;
+        padding: 1.5rem;
     }
 }
