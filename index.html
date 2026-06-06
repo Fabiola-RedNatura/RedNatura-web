@@ -3,134 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RedNatura - Suplementos Alimenticios</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <title>Chatbot RedNatura - Prueba</title>
   <style>
-    /* Botones del chatbot */
-    .chat-messages .options {
-      margin-top: 8px;
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
+    body { font-family: Arial, sans-serif; background: #f5f5f5; }
+    .chatbot-container { 
+      width: 350px; 
+      height: 500px; 
+      border: 1px solid #ccc; 
+      border-radius: 8px; 
+      background: #fff; 
+      position: fixed; 
+      bottom: 20px; 
+      right: 20px; 
+      display: flex; 
+      flex-direction: column; 
     }
-    .chat-messages .options button {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.9rem;
+    .chatbot-header { 
+      background: #4CAF50; 
+      color: white; 
+      padding: 10px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
     }
-    .chat-messages .options button:hover {
-      background-color: #45a049;
+    .chat-messages { 
+      flex: 1; 
+      padding: 10px; 
+      overflow-y: auto; 
     }
-    /* Tarjetas de productos */
-    .producto-card {
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      padding: 12px;
-      text-align: center;
-      background: #fff;
-    }
-    .producto-card .emoji {
-      font-size: 2rem;
-    }
-    .producto-card .precio {
-      font-weight: bold;
-      color: #4CAF50;
-    }
-    .productos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
-    }
+    .message.bot { background: #e0f7e9; padding: 8px; margin: 5px; border-radius: 6px; }
+    .message.user { background: #d0e0ff; padding: 8px; margin: 5px; border-radius: 6px; text-align: right; }
+    .chat-input-area { display: flex; padding: 10px; border-top: 1px solid #ccc; }
+    .chat-input-area input { flex: 1; padding: 6px; }
+    .chat-input-area button { margin-left: 6px; }
+    .options { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .options button { background: #4CAF50; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+    .options button:hover { background: #45a049; }
   </style>
 </head>
 <body>
-  <!-- Navegación -->
-  <nav class="navbar">
-    <div class="container">
-      <div class="logo">
-        <img src="logo.png" alt="Logo" width="60">
-        <h1>RedNatura</h1>
-        <p>Representante Fabiola</p>
-      </div>
-      <ul class="nav-links">
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#productos">Productos</a></li>
-        <li><a href="#sucursales">Sucursales</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-        <li><button class="chat-btn" onclick="toggleChat()">💬 Chat IA</button></li>
-      </ul>
-    </div>
-  </nav>
+  <button onclick="toggleChat()">💬 Abrir Chat</button>
 
-  <!-- Sección Hero -->
-  <section id="inicio" class="hero">
-    <div class="hero-content">
-      <h1>Bienvenido a RedNatura</h1>
-      <p>Suplementos alimenticios naturales para tu bienestar integral</p>
-      <p class="subtitulo">Descubre nuestros productos diseñados para mejorar tu salud, energía y bienestar.</p>
-      <button class="cta-btn" onclick="toggleChat()">Habla con nuestro Agente IA</button>
-    </div>
-  </section>
-
-  <!-- Sección de Productos -->
-  <section id="productos" class="productos">
-    <div class="container">
-      <h2>Nuestros Productos</h2>
-      <p class="descripcion">Suplementos naturales para cada necesidad</p>
-      <div class="filtros">
-        <button class="filtro-btn active" onclick="filtrarProductos('todos')">Todos</button>
-        <button class="filtro-btn" onclick="filtrarProductos('digestiva')">Salud Digestiva</button>
-        <button class="filtro-btn" onclick="filtrarProductos('mental')">Bienestar Mental</button>
-        <button class="filtro-btn" onclick="filtrarProductos('peso')">Control de Peso</button>
-        <button class="filtro-btn" onclick="filtrarProductos('energia')">Energía</button>
-        <button class="filtro-btn" onclick="filtrarProductos('belleza')">Belleza</button>
-      </div>
-      <div id="productos-grid" class="productos-grid"></div>
-    </div>
-  </section>
-
-  <!-- Sección de Sucursales -->
-  <section id="sucursales" class="sucursales">
-    <div class="container">
-      <h2>Nuestras Sucursales</h2>
-      <p>Visítanos en más de 30 ciudades de la República Mexicana</p>
-      <p class="horario">📅 Lunes a Viernes: 9:00 AM - 7:00 PM y Sábados de 9:00 AM - 2:00 PM</p>
-      <div class="sucursales-grid" id="sucursales-grid"></div>
-    </div>
-  </section>
-
-  <!-- Sección Contacto -->
-  <section id="contacto" class="contacto">
-    <div class="container">
-      <h2>Contacto RedNatura</h2>
-      <p>¿Tienes preguntas? Estamos aquí para ayudarte</p>
-      <div class="contacto-info">
-        <div class="info-item">
-          <span class="icon">📞</span>
-          <p><strong>Teléfono:</strong><br>5555070734</p>
-        </div>
-        <div class="info-item">
-          <span class="icon">📧</span>
-          <p><strong>Email:</strong><br>fabiola250204@gmail.com</p>
-        </div>
-        <div class="info-item">
-          <span class="icon">💬</span>
-          <p><strong>WhatsApp:</strong><br><a href="https://wa.me/525555070734" target="_blank">Chatea aquí</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Chatbot IA -->
   <div id="chatbot" class="chatbot-container hidden">
     <div class="chatbot-header">
       <h3>🤖 Asistente RedNatura</h3>
-      <button class="close-btn" onclick="toggleChat()">✕</button>
+      <button onclick="toggleChat()">✕</button>
     </div>
     <div id="chat-messages" class="chat-messages"></div>
     <div class="chat-input-area">
@@ -139,28 +56,75 @@
     </div>
   </div>
 
-  <!-- Modal de Registro -->
-  <div id="registro-modal" class="modal hidden">
-    <div class="modal-content">
-      <span class="close-modal" onclick="cerrarRegistro()">&times;</span>
-      <h2>Registro RedNatura</h2>
-      <form id="registro-form">
-        <input type="text" placeholder="Nombre Completo" id="nombre" required>
-        <input type="tel" placeholder="Número Celular" id="celular" required>
-        <input type="date" placeholder="Fecha de Nacimiento" id="fecha_nacimiento" required>
-        <input type="text" placeholder="Lugar de Nacimiento" id="lugar_nacimiento" required>
-        <button type="submit" class="btn-submit">Registrarse</button>
-      </form>
-    </div>
-  </div>
+  <script>
+    let estado = 'inicial';
 
-  <footer class="footer">
-    <p>&copy; 2024 RedNatura - Representante Fabiola. Todos los derechos reservados.</p>
-    <p style="margin-top: 0.5rem; font-size: 0.9rem;">Suplementos Naturales para tu Bienestar</p>
-  </footer>
+    function toggleChat() {
+      const chatbot = document.getElementById('chatbot');
+      chatbot.classList.toggle('hidden');
+      if (!chatbot.classList.contains('hidden') && estado === 'inicial') {
+        mostrarMensajeBot("¡Hola! 👋 Bienvenido a RedNatura. Soy tu asistente IA.", [
+          { texto: "Ver catálogo", accion: () => mostrarCategorias() },
+          { texto: "Ubicar sucursal", accion: () => mostrarMensajeBot("📍 Dime tu ciudad o estado para mostrarte la sucursal más cercana.") },
+          { texto: "Cómo comprar", accion: () => mostrarMensajeBot("📦 Para comprar: 1️⃣ Elige productos 2️⃣ Regístrate 3️⃣ Confirmamos tu pedido 4️⃣ Recibes en casa o sucursal.") }
+        ]);
+        estado = 'esperando_opcion';
+      }
+    }
 
-  <!-- Scripts -->
-  <script src="js/app.js"></script>
-  <script src="js/chatbot.js"></script>
+    function mostrarCategorias() {
+      mostrarMensajeBot("📋 Selecciona una categoría:", [
+        { texto: "Digestión", accion: () => mostrarMensajeBot("💚 Productos digestivos: PROBI GO!, FEMBALAZ, OXIALOE NF") },
+        { texto: "Peso", accion: () => mostrarMensajeBot("⚖️ Productos para control de peso: LEVIUS, LEVIUS NIGHT, Gummys RedNatura") },
+        { texto: "Energía", accion: () => mostrarMensajeBot("⚡ Productos energéticos: BLUNNER NF, MUSH KAFFI, PRO SHAKE") },
+        { texto: "Belleza", accion: () => mostrarMensajeBot("💎 Productos de belleza: RENAISS NF, RENAISS SERUM, RENAISS CREAM") },
+        { texto: "Inmunidad", accion: () => mostrarMensajeBot("🛡️ Productos para inmunidad: ZENDRA, SERENTRA, UC-II NF") }
+      ]);
+    }
+
+    function mostrarMensajeBot(mensaje, opciones=[]) {
+      const messagesDiv = document.getElementById('chat-messages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message bot';
+      messageDiv.textContent = mensaje;
+
+      if (opciones.length > 0) {
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.className = 'options';
+        opciones.forEach(opcion => {
+          const btn = document.createElement('button');
+          btn.textContent = opcion.texto;
+          btn.onclick = opcion.accion;
+          buttonsDiv.appendChild(btn);
+        });
+        messageDiv.appendChild(buttonsDiv);
+      }
+
+      messagesDiv.appendChild(messageDiv);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function mostrarMensajeUsuario(mensaje) {
+      const messagesDiv = document.getElementById('chat-messages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message user';
+      messageDiv.textContent = mensaje;
+      messagesDiv.appendChild(messageDiv);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function handleChatInput(event) {
+      if (event.key === 'Enter') sendMessage();
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const mensaje = input.value.trim();
+      if (!mensaje) return;
+      mostrarMensajeUsuario(mensaje);
+      input.value = '';
+      mostrarMensajeBot("No entendí bien tu pregunta. 🤔 Usa los botones para navegar.");
+    }
+  </script>
 </body>
 </html>
