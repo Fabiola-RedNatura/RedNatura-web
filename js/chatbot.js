@@ -16,8 +16,9 @@ function toggleChat() {
 
 function mostrarCategorias() {
   const categorias = [
-    "Salud Digestiva","Control de Peso","Energía y Rendimiento","Belleza y Antienvejecimiento",
-    "Sistema Inmunológico","Mujeres","Hombres","Nutrición Infantil","Deportistas","Adultos Mayores"
+    "Salud Digestiva","Bienestar Mental","Mujeres","Control de Peso",
+    "Energía y Rendimiento","Belleza y Antienvejecimiento","Sistema Inmunológico",
+    "Nutrición Infantil","Articulaciones y Movilidad","Hombres"
   ];
   mostrarMensajeBot("📋 Selecciona una categoría:", categorias.map(cat => ({
     texto: cat, accion: () => mostrarProductosPorCategoria(cat)
@@ -25,21 +26,23 @@ function mostrarCategorias() {
 }
 
 function mostrarProductosPorCategoria(categoria) {
-  const filtrados = productos.filter(p => p.categoria.toLowerCase().includes(categoria.toLowerCase()));
+  const filtrados = productos.filter(p => p.categoria.toLowerCase() === categoria.toLowerCase());
   if (filtrados.length === 0) {
     mostrarMensajeBot("No encontré productos en esa categoría.");
     return;
   }
 
-  mostrarMensajeBot(`📦 Productos en categoría ${categoria}:`);
   filtrados.forEach(prod => {
     mostrarMensajeBot(`${prod.nombre}`, [
       { texto: "Ver precio", accion: () => mostrarMensajeBot(`💰 Precio de ${prod.nombre}: ${prod.precio}`) },
       { texto: "Ver descripción", accion: () => mostrarMensajeBot(`ℹ️ ${prod.descripcion}`) },
-      { texto: "Registrarme", accion: () => mostrarMensajeBot(`✅ Al registrarte como cliente preferente obtienes 30% de descuento en cualquier producto mayor de $350 MXN.\n\n¿Quieres abrir el formulario de registro?`, [
-        { texto: "Sí, registrarme", accion: () => abrirModalRegistro() },
-        { texto: "No, gracias", accion: () => mostrarMensajeBot("De acuerdo 👍. Puedes seguir explorando productos.") }
-      ]) }
+      { texto: "Registrarme", accion: () => mostrarMensajeBot(
+        `✅ Al registrarte como cliente preferente obtienes 30% de descuento en cualquier producto mayor de $350 MXN.\n\n¿Quieres abrir el formulario de registro?`,
+        [
+          { texto: "Sí, registrarme", accion: () => abrirModalRegistro(prod) },
+          { texto: "No, gracias", accion: () => mostrarMensajeBot("De acuerdo 👍. Puedes seguir explorando productos.") }
+        ]
+      )}
     ]);
   });
 }
@@ -113,10 +116,19 @@ function sendMessage() {
   }
 }
 
-function abrirModalRegistro() {
+function abrirModalRegistro(producto) {
   const modal = document.getElementById('registro-modal');
   modal.classList.remove('hidden');
   modal.classList.add('show');
+
+  const form = document.getElementById('registro-form');
+  form.onsubmit = function(e) {
+    e.preventDefault();
+    const nombre = document.getElementById('nombre').value;
+    const celular = document.getElementById('celular').value;
+    enviarWhatsAppRegistro({ nombre, celular, producto });
+    cerrarRegistro();
+  };
 }
 
 function cerrarRegistro() {
@@ -124,3 +136,13 @@ function cerrarRegistro() {
   modal.classList.add('hidden');
   modal.classList.remove('show');
 }
+
+function enviarWhatsAppRegistro(datos) {
+  const numeroCliente = "5555070734"; // tu número fijo
+  const mensaje = encodeURIComponent(
+    `Hola ${datos.nombre}, gracias por registrarte en RedNatura. Producto: ${datos.producto?.nombre || ''}. Nos pondremos en contacto contigo para tu compra.`
+  );
+  const url = `https://wa.me/52${numeroCliente}?text=${mensaje}`;
+  window.open(url, '_blank');
+}
+
