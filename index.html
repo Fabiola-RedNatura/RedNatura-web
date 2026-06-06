@@ -5,62 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RedNatura - Suplementos Alimenticios</title>
   <link rel="stylesheet" href="css/styles.css">
-  <style>
-    /* Botones generales */
-    button, .filtro-btn, .chat-btn, .btn-producto {
-      background: #4CAF50;
-      color: #fff;
-      border: none;
-      border-radius: 25px; /* redondeado */
-      padding: 8px 16px;
-      cursor: pointer;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
-    }
-    button:hover, .filtro-btn:hover, .chat-btn:hover, .btn-producto:hover {
-      background: #45a049;
-      transform: scale(1.05);
-      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-    }
-
-    /* Chatbot */
-    .chatbot-container { 
-      width: 350px; height: 500px; border: 1px solid #ccc; border-radius: 8px;
-      background: #fff; position: fixed; bottom: 20px; right: 20px;
-      display: flex; flex-direction: column;
-    }
-    .chatbot-header { background: #4CAF50; color: white; padding: 10px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .chat-messages { flex: 1; padding: 10px; overflow-y: auto; }
-    .message.bot { background: #e0f7e9; padding: 8px; margin: 5px; border-radius: 6px; }
-    .message.user { background: #d0e0ff; padding: 8px; margin: 5px; border-radius: 6px; text-align: right; }
-    .chat-input-area { display: flex; padding: 10px; border-top: 1px solid #ccc; }
-    .chat-input-area input { flex: 1; padding: 6px; border-radius: 20px; border: 1px solid #ccc; }
-    .chat-input-area button { margin-left: 6px; }
-
-    .options { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
-    .options button { background: #4CAF50; color: white; border: none; padding: 6px 12px; border-radius: 20px; cursor: pointer; }
-    .options button:hover { background: #45a049; }
-    
-    /* Productos */
-    .productos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
-    }
-    .producto-card {
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 12px;
-      text-align: center;
-      background: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .producto-card .emoji { font-size: 2rem; }
-    .producto-card .precio { font-weight: bold; color: #4CAF50; margin-top: 8px; }
-  </style>
 </head>
 <body>
   <!-- Navegación -->
@@ -81,7 +25,7 @@
     </div>
   </nav>
 
-  <!-- Sección Hero -->
+  <!-- Hero -->
   <section id="inicio" class="hero">
     <div class="hero-content">
       <h1>Bienvenido a RedNatura</h1>
@@ -90,17 +34,17 @@
     </div>
   </section>
 
-  <!-- Sección de Productos -->
+  <!-- Productos -->
   <section id="productos" class="productos">
     <div class="container">
       <h2>Nuestros Productos</h2>
+      <p class="descripcion">41 suplementos naturales para cada necesidad</p>
       <div class="filtros">
         <button class="filtro-btn" onclick="filtrarProductos('todos')">Todos</button>
         <button class="filtro-btn" onclick="filtrarProductos('Salud Digestiva')">Digestión</button>
         <button class="filtro-btn" onclick="filtrarProductos('Bienestar Mental')">Mental</button>
         <button class="filtro-btn" onclick="filtrarProductos('Control de Peso')">Peso</button>
         <button class="filtro-btn" onclick="filtrarProductos('Energía y Rendimiento')">Energía</button>
-        <button class="filtro-btn" onclick="filtrarProductos('Belleza y Antienvejecimiento')">Belleza</button>
         <button class="filtro-btn" onclick="filtrarProductos('Mujeres')">Mujer</button>
         <button class="filtro-btn" onclick="filtrarProductos('Hombres')">Hombre</button>
       </div>
@@ -108,21 +52,30 @@
     </div>
   </section>
 
-  <!-- Sección Sucursales -->
+  <!-- Sucursales -->
   <section id="sucursales" class="sucursales">
     <div class="container">
       <h2>Nuestras Sucursales</h2>
-      <p>Visítanos en más de 30 ciudades de México</p>
-      <div id="sucursales-grid"></div>
+      <p>Visítanos en más de 30 ciudades de la República Mexicana</p>
+      <div id="sucursales-grid" class="sucursales-grid"></div>
     </div>
   </section>
 
-  <!-- Sección Contacto -->
+  <!-- Contacto -->
   <section id="contacto" class="contacto">
     <div class="container">
-      <h2>Contacto</h2>
-      <p>Email: fabiola250204@gmail.com</p>
-      <p>WhatsApp: <a href="https://wa.me/525555070734" target="_blank">Chatea aquí</a></p>
+      <h2>Contacto RedNatura</h2>
+      <p>¿Tienes preguntas? Estamos aquí para ayudarte</p>
+      <div class="contacto-info">
+        <div class="info-item contact-card">
+          <span class="icon">📞</span>
+          <p>Teléfono: 5555070734</p>
+        </div>
+        <div class="info-item contact-card">
+          <span class="icon">📧</span>
+          <p>Email: fabiola250204@gmail.com</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -130,7 +83,7 @@
   <div id="chatbot" class="chatbot-container hidden">
     <div class="chatbot-header">
       <h3>🤖 Asistente RedNatura</h3>
-      <button onclick="toggleChat()">✕</button>
+      <button class="close-btn" onclick="toggleChat()">✕</button>
     </div>
     <div id="chat-messages" class="chat-messages"></div>
     <div class="chat-input-area">
@@ -147,7 +100,7 @@
       <form id="registro-form">
         <input type="text" id="nombre" placeholder="Nombre Completo" required>
         <input type="tel" id="celular" placeholder="Número Celular" required>
-        <button type="submit">Registrarse</button>
+        <button type="submit" class="btn-submit">Registrarse</button>
       </form>
     </div>
   </div>
