@@ -6,7 +6,24 @@
   <title>RedNatura - Suplementos Alimenticios</title>
   <link rel="stylesheet" href="css/styles.css">
   <style>
-    /* Estilos mínimos para el chatbot */
+    /* Botones generales */
+    button, .filtro-btn, .chat-btn, .btn-producto {
+      background: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 25px; /* redondeado */
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+    button:hover, .filtro-btn:hover, .chat-btn:hover, .btn-producto:hover {
+      background: #45a049;
+      transform: scale(1.05);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    }
+
+    /* Chatbot */
     .chatbot-container { 
       width: 350px; height: 500px; border: 1px solid #ccc; border-radius: 8px;
       background: #fff; position: fixed; bottom: 20px; right: 20px;
@@ -19,11 +36,30 @@
     .message.bot { background: #e0f7e9; padding: 8px; margin: 5px; border-radius: 6px; }
     .message.user { background: #d0e0ff; padding: 8px; margin: 5px; border-radius: 6px; text-align: right; }
     .chat-input-area { display: flex; padding: 10px; border-top: 1px solid #ccc; }
-    .chat-input-area input { flex: 1; padding: 6px; }
+    .chat-input-area input { flex: 1; padding: 6px; border-radius: 20px; border: 1px solid #ccc; }
     .chat-input-area button { margin-left: 6px; }
+
     .options { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
-    .options button { background: #4CAF50; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+    .options button { background: #4CAF50; color: white; border: none; padding: 6px 12px; border-radius: 20px; cursor: pointer; }
     .options button:hover { background: #45a049; }
+    
+    /* Productos */
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .producto-card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .producto-card .emoji { font-size: 2rem; }
+    .producto-card .precio { font-weight: bold; color: #4CAF50; margin-top: 8px; }
   </style>
 </head>
 <body>
@@ -59,12 +95,14 @@
     <div class="container">
       <h2>Nuestros Productos</h2>
       <div class="filtros">
-        <button onclick="filtrarProductos('todos')">Todos</button>
-        <button onclick="filtrarProductos('Salud Digestiva')">Digestión</button>
-        <button onclick="filtrarProductos('Control de Peso')">Peso</button>
-        <button onclick="filtrarProductos('Energía')">Energía</button>
-        <button onclick="filtrarProductos('Mujeres')">Mujer</button>
-        <button onclick="filtrarProductos('Hombres')">Hombre</button>
+        <button class="filtro-btn" onclick="filtrarProductos('todos')">Todos</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Salud Digestiva')">Digestión</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Bienestar Mental')">Mental</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Control de Peso')">Peso</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Energía y Rendimiento')">Energía</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Belleza y Antienvejecimiento')">Belleza</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Mujeres')">Mujer</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Hombres')">Hombre</button>
       </div>
       <div id="productos-grid" class="productos-grid"></div>
     </div>
