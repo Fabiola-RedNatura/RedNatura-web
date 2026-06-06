@@ -6,7 +6,7 @@
   <title>RedNatura - Suplementos Alimenticios</title>
   <link rel="stylesheet" href="css/styles.css">
   <style>
-    /* Estilos básicos para los botones del chatbot */
+    /* Botones del chatbot */
     .chat-messages .options {
       margin-top: 8px;
       display: flex;
@@ -24,6 +24,27 @@
     }
     .chat-messages .options button:hover {
       background-color: #45a049;
+    }
+    /* Tarjetas de productos */
+    .producto-card {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 12px;
+      text-align: center;
+      background: #fff;
+    }
+    .producto-card .emoji {
+      font-size: 2rem;
+    }
+    .producto-card .precio {
+      font-weight: bold;
+      color: #4CAF50;
+    }
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -51,7 +72,7 @@
     <div class="hero-content">
       <h1>Bienvenido a RedNatura</h1>
       <p>Suplementos alimenticios naturales para tu bienestar integral</p>
-      <p class="subtitulo">Descubre nuestros 41 productos diseñados para mejorar tu salud, energía y bienestar con ingredientes naturales y fórmulas probadas.</p>
+      <p class="subtitulo">Descubre nuestros productos diseñados para mejorar tu salud, energía y bienestar.</p>
       <button class="cta-btn" onclick="toggleChat()">Habla con nuestro Agente IA</button>
     </div>
   </section>
@@ -60,7 +81,7 @@
   <section id="productos" class="productos">
     <div class="container">
       <h2>Nuestros Productos</h2>
-      <p class="descripcion">41 suplementos naturales para cada necesidad</p>
+      <p class="descripcion">Suplementos naturales para cada necesidad</p>
       <div class="filtros">
         <button class="filtro-btn active" onclick="filtrarProductos('todos')">Todos</button>
         <button class="filtro-btn" onclick="filtrarProductos('digestiva')">Salud Digestiva</button>
@@ -91,7 +112,7 @@
       <div class="contacto-info">
         <div class="info-item">
           <span class="icon">📞</span>
-          <p><strong>Teléfono:</strong><br>Agregará después</p>
+          <p><strong>Teléfono:</strong><br>5555070734</p>
         </div>
         <div class="info-item">
           <span class="icon">📧</span>
@@ -99,7 +120,7 @@
         </div>
         <div class="info-item">
           <span class="icon">💬</span>
-          <p><strong>WhatsApp:</strong><br>Agregará después</p>
+          <p><strong>WhatsApp:</strong><br><a href="https://wa.me/525555070734" target="_blank">Chatea aquí</a></p>
         </div>
       </div>
     </div>
@@ -115,14 +136,6 @@
     <div class="chat-input-area">
       <input type="text" id="chat-input" placeholder="Escribe tu pregunta..." onkeypress="handleChatInput(event)">
       <button onclick="sendMessage()">Enviar</button>
-    </div>
-  </div>
-
-  <!-- Modal de Detalles de Producto -->
-  <div id="producto-modal" class="modal hidden">
-    <div class="modal-content producto-detail">
-      <span class="close-modal" onclick="cerrarDetalles()">&times;</span>
-      <div id="producto-detalle"></div>
     </div>
   </div>
 
@@ -147,7 +160,7 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="js/productos.js"></script>
+  <script src="js/app.js"></script>
   <script src="js/chatbot.js"></script>
 </body>
 </html>
