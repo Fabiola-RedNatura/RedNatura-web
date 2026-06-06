@@ -75,35 +75,32 @@ function procesarOpcion(respuesta) {
 
 function procesarPregunta(pregunta) {
     const p = pregunta.toLowerCase();
-    let respuesta = '';
 
     if (p.includes('producto') || p.includes('catálogo')) {
-        respuesta = "📋 Tenemos más de 40 suplementos en categorías como Digestión, Peso, Energía, Belleza, Inmunidad.\n\n¿Quieres ver alguna categoría?";
+        mostrarMensajeBot("📋 Tenemos más de 40 suplementos en categorías como Digestión, Peso, Energía, Belleza, Inmunidad.\n\nSelecciona una categoría:", [
+            { texto: "Digestión", accion: () => mostrarProductosPorCategoria("Salud Digestiva") },
+            { texto: "Peso", accion: () => mostrarProductosPorCategoria("Control de Peso") },
+            { texto: "Energía", accion: () => mostrarProductosPorCategoria("Energía y Rendimiento") },
+            { texto: "Belleza", accion: () => mostrarProductosPorCategoria("Belleza") },
+            { texto: "Inmunidad", accion: () => mostrarProductosPorCategoria("Sistema Inmunológico") }
+        ]);
     } else if (p.includes('precio') || p.includes('costo')) {
-        respuesta = "💰 Nuestros precios van desde $292 hasta $1,459 MXN.\n¿Quieres que te muestre los productos por rango de precio?";
+        mostrarMensajeBot("💰 Nuestros precios van desde $292 hasta $1,459 MXN.\n¿Quieres ver productos por rango de precio?");
     } else if (p.includes('digestión') || p.includes('estómago')) {
         mostrarProductosPorCategoria("Salud Digestiva");
-        return;
     } else if (p.includes('estrés') || p.includes('memoria') || p.includes('concentración')) {
         mostrarProductosPorCategoria("Bienestar Mental");
-        return;
     } else if (p.includes('peso') || p.includes('adelgazar')) {
         mostrarProductosPorCategoria("Control de Peso");
-        return;
     } else if (p.includes('energía') || p.includes('cansancio')) {
         mostrarProductosPorCategoria("Energía y Rendimiento");
-        return;
     } else if (p.includes('piel') || p.includes('belleza')) {
         mostrarProductosPorCategoria("Belleza");
-        return;
     } else if (p.includes('inmunidad') || p.includes('defensas')) {
         mostrarProductosPorCategoria("Sistema Inmunológico");
-        return;
     } else {
-        respuesta = `No entendí bien tu pregunta. 🤔\n\nPuedes escribirme directamente por WhatsApp aquí: https://wa.me/525555070734`;
+        mostrarMensajeBot(`No entendí bien tu pregunta. 🤔\n\nPuedes escribirme directamente por WhatsApp aquí: https://wa.me/525555070734`);
     }
-
-    mostrarMensajeBot(respuesta);
 }
 
 function mostrarProductosPorCategoria(categoria) {
@@ -112,12 +109,14 @@ function mostrarProductosPorCategoria(categoria) {
         mostrarMensajeBot("No encontré productos en esa categoría.");
         return;
     }
+
     mostrarMensajeBot(`📦 Productos en categoría ${categoria}:`);
     filtrados.forEach(prod => {
         mostrarMensajeBot(`${prod.nombre} (${prod.precio})`, [
             { texto: "Ver Beneficios", accion: () => mostrarMensajeBot("✨ Beneficios:\n- " + prod.beneficios.join("\n- ")) },
             { texto: "Ver Ingredientes", accion: () => mostrarMensajeBot("🧪 Ingredientes:\n- " + prod.ingredientes.join("\n- ")) },
-            { texto: "Modo de uso", accion: () => mostrarMensajeBot("📖 Modo de uso:\n" + prod.modoUso) }
+            { texto: "Modo de uso", accion: () => mostrarMensajeBot("📖 Modo de uso:\n" + prod.modoUso) },
+            { texto: "Registrarme", accion: () => abrirModalRegistro() }
         ]);
     });
 }
@@ -184,17 +183,17 @@ document.addEventListener('DOMContentLoaded', () => {
             estado = 'registro_completo';
             cerrarRegistro();
             form.reset();
-            mostrarMensajeBot(`✅ ¡Registro completado exitosamente ${datosUsuario.nombre}!\n\n📧 Confirmación enviada a tu correo.\n📱 Nos contactaremos al ${datosUsuario.celular} para confirmar tu compra.`);
+                        mostrarMensajeBot(`✅ ¡Registro completado exitosamente ${datosUsuario.nombre}!\n\n📧 Confirmación enviada.\n📱 Nos contactaremos al ${datosUsuario.celular} para confirmar tu compra.`);
         });
     }
 });
 
 function enviarEmailRegistro(datos) {
     const formData = new FormData();
-    formData.append('email', 'fabiola250204@gmail.com');
+    formData.append('email', 'fabiola250204@gmail.com'); // correo receptor
     formData.append('subject', `Nuevo Registro - ${datos.nombre}`);
-    formData.append('message', `NUEVO REGISTRO  EN REDNATURA\n
-    Nombre Completo: ${datos.nombre}
+    formData.append('message', `NUEVO REGISTRO EN REDNATURA\n
+Nombre Completo: ${datos.nombre}
 Número Celular: ${datos.celular}
 Fecha de Nacimiento: ${datos.fechaNacimiento}
 Lugar de Nacimiento: ${datos.lugarNacimiento}
@@ -220,3 +219,5 @@ function enviarWhatsAppRegistro(datos) {
     const url = `https://wa.me/52${numeroCliente}?text=${mensaje}`;
     window.open(url, '_blank'); // abre WhatsApp en nueva pestaña
 }
+
+
