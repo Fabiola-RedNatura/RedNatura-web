@@ -1,131 +1,153 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RedNatura - Suplementos Alimenticios</title>
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RedNatura - Suplementos Alimenticios</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Estilos básicos para los botones del chatbot */
+    .chat-messages .options {
+      margin-top: 8px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .chat-messages .options button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .chat-messages .options button:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
-    <!-- Navegación -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <img src="logo.png" alt="Logo" width="60">
-                <h1>RedNatura</h1>
-                <p>Representante Fabiola</p>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#productos">Productos</a></li>
-                <li><a href="#sucursales">Sucursales</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-                <li><button class="chat-btn" onclick="toggleChat()">💬 Chat IA</button></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Sección Hero -->
-    <section id="inicio" class="hero">
-        <div class="hero-content">
-            <h1>Bienvenido a RedNatura</h1>
-            <p>Suplementos alimenticios naturales para tu bienestar integral</p>
-            <p class="subtitulo">Descubre nuestros 41 productos diseñados para mejorar tu salud, energía y bienestar con ingredientes naturales y fórmulas probadas.</p>
-            <button class="cta-btn" onclick="toggleChat()">Habla con nuestro Agente IA</button>
-        </div>
-    </section>
-
-    <!-- Sección de Productos -->
-    <section id="productos" class="productos">
-        <div class="container">
-            <h2>Nuestros Productos</h2>
-            <p class="descripcion">41 suplementos naturales para cada necesidad</p>
-            <div class="filtros">
-                <button class="filtro-btn active" onclick="filtrarProductos('todos')">Todos</button>
-                <button class="filtro-btn" onclick="filtrarProductos('digestiva')">Salud Digestiva</button>
-                <button class="filtro-btn" onclick="filtrarProductos('mental')">Bienestar Mental</button>
-                <button class="filtro-btn" onclick="filtrarProductos('peso')">Control de Peso</button>
-                <button class="filtro-btn" onclick="filtrarProductos('energia')">Energía</button>
-                <button class="filtro-btn" onclick="filtrarProductos('belleza')">Belleza</button>
-            </div>
-            <div id="productos-grid" class="productos-grid"></div>
-        </div>
-    </section>
-
-    <!-- Sección de Sucursales -->
-    <section id="sucursales" class="sucursales">
-        <div class="container">
-            <h2>Nuestras Sucursales</h2>
-            <p>Visítanos en más de 30 ciudades de la República Mexicana</p>
-            <p class="horario">📅 Lunes a Viernes: 9:00 AM - 7:00 PM Y Sábados de 9:00 AM - 2:00 - PM</p>
-            <div class="sucursales-grid" id="sucursales-grid"></div>
-        </div>
-    </section>
-
-    <!-- Sección Contacto -->
-    <section id="contacto" class="contacto">
-        <div class="container">
-            <h2>Contacto RedNatura</h2>
-            <p>¿Tienes preguntas? Estamos aquí para ayudarte</p>
-            <div class="contacto-info">
-                <div class="info-item">
-                    <span class="icon">📞</span>
-                    <p><strong>Teléfono:</strong><br>Agregará después</p>
-                </div>
-                <div class="info-item">
-                    <span class="icon">📧</span>
-                    <p><strong>Email:</strong><br>fabiola250204@gmail.com</p>
-                </div>
-                <div class="info-item">
-                    <span class="icon">💬</span>
-                    <p><strong>WhatsApp:</strong><br>Agregará después</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Chatbot IA -->
-    <div id="chatbot" class="chatbot-container hidden">
-        <div class="chatbot-header">
-            <h3>🤖 Asistente RedNatura</h3>
-            <button class="close-btn" onclick="toggleChat()">✕</button>
-        </div>
-        <div id="chat-messages" class="chat-messages"></div>
-        <div class="chat-input-area">
-            <input type="text" id="chat-input" placeholder="Escribe tu pregunta..." onkeypress="handleChatInput(event)">
-            <button onclick="sendMessage()">Enviar</button>
-        </div>
+  <!-- Navegación -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo">
+        <img src="logo.png" alt="Logo" width="60">
+        <h1>RedNatura</h1>
+        <p>Representante Fabiola</p>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#sucursales">Sucursales</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><button class="chat-btn" onclick="toggleChat()">💬 Chat IA</button></li>
+      </ul>
     </div>
+  </nav>
 
-    <!-- Modal de Detalles de Producto -->
-    <div id="producto-modal" class="modal hidden">
-        <div class="modal-content producto-detail">
-            <span class="close-modal" onclick="cerrarDetalles()">&times;</span>
-            <div id="producto-detalle"></div>
-        </div>
+  <!-- Sección Hero -->
+  <section id="inicio" class="hero">
+    <div class="hero-content">
+      <h1>Bienvenido a RedNatura</h1>
+      <p>Suplementos alimenticios naturales para tu bienestar integral</p>
+      <p class="subtitulo">Descubre nuestros 41 productos diseñados para mejorar tu salud, energía y bienestar con ingredientes naturales y fórmulas probadas.</p>
+      <button class="cta-btn" onclick="toggleChat()">Habla con nuestro Agente IA</button>
     </div>
+  </section>
 
-    <!-- Modal de Registro -->
-    <div id="registro-modal" class="modal hidden">
-        <div class="modal-content">
-            <span class="close-modal" onclick="cerrarRegistro()">&times;</span>
-            <h2>Registro RedNatura</h2>
-            <form id="registro-form">
-                <input type="text" placeholder="Nombre Completo" id="nombre" required>
-                <input type="tel" placeholder="Número Celular" id="celular" required>
-                <input type="date" placeholder="Fecha de Nacimiento" id="fecha_nacimiento" required>
-                <input type="text" placeholder="Lugar de Nacimiento" id="lugar_nacimiento" required>
-                <button type="submit" class="btn-submit">Registrarse</button>
-            </form>
-        </div>
+  <!-- Sección de Productos -->
+  <section id="productos" class="productos">
+    <div class="container">
+      <h2>Nuestros Productos</h2>
+      <p class="descripcion">41 suplementos naturales para cada necesidad</p>
+      <div class="filtros">
+        <button class="filtro-btn active" onclick="filtrarProductos('todos')">Todos</button>
+        <button class="filtro-btn" onclick="filtrarProductos('digestiva')">Salud Digestiva</button>
+        <button class="filtro-btn" onclick="filtrarProductos('mental')">Bienestar Mental</button>
+        <button class="filtro-btn" onclick="filtrarProductos('peso')">Control de Peso</button>
+        <button class="filtro-btn" onclick="filtrarProductos('energia')">Energía</button>
+        <button class="filtro-btn" onclick="filtrarProductos('belleza')">Belleza</button>
+      </div>
+      <div id="productos-grid" class="productos-grid"></div>
     </div>
+  </section>
 
-    <footer class="footer">
-        <p>&copy; 2024 RedNatura - Representante Fabiola. Todos los derechos reservados.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Suplementos Naturales para tu Bienestar</p>
-    </footer>
+  <!-- Sección de Sucursales -->
+  <section id="sucursales" class="sucursales">
+    <div class="container">
+      <h2>Nuestras Sucursales</h2>
+      <p>Visítanos en más de 30 ciudades de la República Mexicana</p>
+      <p class="horario">📅 Lunes a Viernes: 9:00 AM - 7:00 PM y Sábados de 9:00 AM - 2:00 PM</p>
+      <div class="sucursales-grid" id="sucursales-grid"></div>
+    </div>
+  </section>
 
-    <script src="js/app.js"></script>
-    <script src="js/chatbot.js"></script>
+  <!-- Sección Contacto -->
+  <section id="contacto" class="contacto">
+    <div class="container">
+      <h2>Contacto RedNatura</h2>
+      <p>¿Tienes preguntas? Estamos aquí para ayudarte</p>
+      <div class="contacto-info">
+        <div class="info-item">
+          <span class="icon">📞</span>
+          <p><strong>Teléfono:</strong><br>Agregará después</p>
+        </div>
+        <div class="info-item">
+          <span class="icon">📧</span>
+          <p><strong>Email:</strong><br>fabiola250204@gmail.com</p>
+        </div>
+        <div class="info-item">
+          <span class="icon">💬</span>
+          <p><strong>WhatsApp:</strong><br>Agregará después</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chatbot IA -->
+  <div id="chatbot" class="chatbot-container hidden">
+    <div class="chatbot-header">
+      <h3>🤖 Asistente RedNatura</h3>
+      <button class="close-btn" onclick="toggleChat()">✕</button>
+    </div>
+    <div id="chat-messages" class="chat-messages"></div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Escribe tu pregunta..." onkeypress="handleChatInput(event)">
+      <button onclick="sendMessage()">Enviar</button>
+    </div>
+  </div>
+
+  <!-- Modal de Detalles de Producto -->
+  <div id="producto-modal" class="modal hidden">
+    <div class="modal-content producto-detail">
+      <span class="close-modal" onclick="cerrarDetalles()">&times;</span>
+      <div id="producto-detalle"></div>
+    </div>
+  </div>
+
+  <!-- Modal de Registro -->
+  <div id="registro-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-modal" onclick="cerrarRegistro()">&times;</span>
+      <h2>Registro RedNatura</h2>
+      <form id="registro-form">
+        <input type="text" placeholder="Nombre Completo" id="nombre" required>
+        <input type="tel" placeholder="Número Celular" id="celular" required>
+        <input type="date" placeholder="Fecha de Nacimiento" id="fecha_nacimiento" required>
+        <input type="text" placeholder="Lugar de Nacimiento" id="lugar_nacimiento" required>
+        <button type="submit" class="btn-submit">Registrarse</button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2024 RedNatura - Representante Fabiola. Todos los derechos reservados.</p>
+    <p style="margin-top: 0.5rem; font-size: 0.9rem;">Suplementos Naturales para tu Bienestar</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/productos.js"></script>
+  <script src="js/chatbot.js"></script>
 </body>
 </html>
