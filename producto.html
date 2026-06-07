@@ -9,9 +9,21 @@
   <div class="container">
     <h1 id="nombre"></h1>
     <img id="imagen" style="max-width:400px; border-radius:10px; margin:20px 0;">
-    <p id="presentacion"></p>
     <p id="descripcion"></p>
-    <h3>Ingredientes</h3>
-    <ul id="ingredientes"></ul>
-    <h3>Beneficios</h3>
-    <ul id="beneficios"></ul>
+    <p><strong>Precio:</strong> <span id="precio"></span></p>
+    <a href="index.html" class="btn-producto">⬅ Volver al catálogo</a>
+  </div>
+
+  <script src="js/productos.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get('id'));
+    const producto = productos.find(p => p.id === id);
+
+    if (producto) {
+      document.getElementById('nombre').textContent = producto.nombre;
+      document.getElementById('imagen').src = `img/${producto.id}.png`;
+      document.getElementById('descripcion').textContent = producto.descripcion;
+      document.getElementById('precio').textContent = `$${producto.precio.toLocaleString('es-MX')}`;
+    }
+
