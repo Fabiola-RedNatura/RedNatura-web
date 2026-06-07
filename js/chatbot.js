@@ -36,9 +36,7 @@ function mostrarProductosPorCategoria(categoria) {
         `💰 Precio de ${prod.nombre}: $${prod.precio.toLocaleString('es-MX')}
 ¿Quieres comprarlo ahora?`,
         [
-          { texto: "Sí, comprar", accion: () => mostrarMensajeBot(
-            `✅ Recuerda: al registrarte como cliente preferente obtienes 30% de descuento en cualquier producto mayor de $350 MXN.`
-          ) },
+          { texto: "Sí, comprar", accion: () => abrirModalRegistro(prod) },
           { texto: "No, gracias", accion: () => mostrarMensajeBot("De acuerdo 👍, puedes seguir explorando productos.") }
         ]
       ) },
@@ -64,9 +62,10 @@ function pedirUbicacion() {
 }
 
 function procesarUbicacion(ubicacion) {
-  const ciudad = ubicacion.trim().toLowerCase();
+  const ciudad = ubicacion.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   const sucursal = sucursales.find(s =>
-    s.ciudad.toLowerCase() === ciudad || s.estado.toLowerCase() === ciudad
+    s.ciudad.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === ciudad ||
+    s.estado.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === ciudad
   );
 
   if (sucursal) {
@@ -82,11 +81,11 @@ Horario: Lunes a Viernes 9:00 AM - 7:00 PM, Sábados 9:00 AM - 2:00 PM.
 function analizarSintomas(texto) {
   const t = texto.toLowerCase();
   if (t.includes("cansancio") || t.includes("fatiga")) {
-    mostrarMensajeBot("🔋 Te recomiendo suplementos alimenticios de la categoría Energía y Rendimiento.");
+    mostrarMensajeBot("🔋 Te recomiendo suplementos alimenticios de la categoría Energía.");
   } else if (t.includes("digest")) {
-    mostrarMensajeBot("🌿 Te recomiendo suplementos alimenticios de la categoría Salud Digestiva.");
+    mostrarMensajeBot("🌿 Te recomiendo suplementos alimenticios de la categoría Digestiva.");
   } else if (t.includes("estrés") || t.includes("ansiedad")) {
-    mostrarMensajeBot("🧘 Te recomiendo suplementos alimenticios de la categoría Bienestar Mental.");
+    mostrarMensajeBot("🧘 Te recomiendo suplementos alimenticios de la categoría Mental.");
   } else {
     mostrarMensajeBot("ℹ️ Recuerda que todos nuestros productos son suplementos alimenticios. ¿Quieres atención personalizada?", [
       { texto: "Sí", accion: () => abrirWhatsAppPersonalizado() },
@@ -196,3 +195,4 @@ Nos pondremos en contacto contigo para tu compra.`
   const mailto = `mailto:fabiola250204@gmail.com?subject=Nuevo registro RedNatura&body=${mensaje}`;
   window.open(mailto, '_blank');
 }
+
