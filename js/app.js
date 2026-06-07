@@ -1,14 +1,16 @@
+// Renderizar productos
 function renderProductos(filtro = 'todos') {
   const grid = document.getElementById('productos-grid');
   grid.innerHTML = '';
 
+  // Filtrar productos según categoría
   const productosFiltrados = filtro === 'todos' ? productos : productos.filter(p => p.categoria === filtro);
 
   productosFiltrados.forEach(producto => {
     const card = document.createElement('div');
     card.className = 'producto-card';
     card.innerHTML = `
-      <img src="img/${producto.id}.png" alt="${producto.nombre}" style="width:100%; border-radius:10px; margin-bottom:10px;">
+      <img src="img/${producto.id}.png" alt="${producto.nombre}" class="producto-img">
       <h3>${producto.nombre}</h3>
       <p>${producto.descripcion}</p>
       <div class="precio">$${producto.precio.toLocaleString('es-MX')}</div>
@@ -18,10 +20,24 @@ function renderProductos(filtro = 'todos') {
   });
 }
 
+// Redirigir a la página de detalle
 function verDescripcion(productoId) {
   window.location.href = `producto.html?id=${productoId}`;
 }
 
+// Filtrar productos desde botones
+function filtrarProductos(filtro) {
+  // Actualizar botones activos
+  document.querySelectorAll('.filtro-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  // Marcar el botón actual
+  event.target.classList.add('active');
+
+  renderProductos(filtro);
+}
+
+// Renderizar sucursales
 function renderSucursales() {
   const grid = document.getElementById('sucursales-grid');
   grid.innerHTML = '';
@@ -38,7 +54,9 @@ function renderSucursales() {
   });
 }
 
+// Inicializar al cargar la página
 window.addEventListener('DOMContentLoaded', () => {
   renderProductos();
   renderSucursales();
 });
+
