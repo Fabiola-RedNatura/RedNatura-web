@@ -10,7 +10,7 @@
       flex-direction: row;
       gap: 20px;
       margin: 40px auto;
-      max-width: 900px;
+      max-width: 1000px;
     }
     .producto-img-left {
       flex: 1;
@@ -23,7 +23,7 @@
       flex: 2;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
     }
     .producto-info-right h1 {
       margin-bottom: 15px;
@@ -61,8 +61,13 @@
     <div class="producto-info-right">
       <h1 id="nombre"></h1>
       <p id="descripcion"></p>
+      <h3>Ingredientes</h3>
+      <ul id="ingredientes"></ul>
+      <h3>Modo de uso</h3>
+      <p id="uso"></p>
       <p><strong>Precio:</strong> <span id="precio"></span></p>
-      <button class="btn-comprar" onclick="preguntarCompra()">Ver precio</button>
+      <p id="promocion"></p>
+      <button class="btn-comprar" onclick="abrirRegistro()">Comprar</button>
     </div>
   </div>
 
@@ -76,13 +81,35 @@
       document.getElementById('nombre').textContent = producto.nombre;
       document.getElementById('imagen').src = `img/${producto.id}.png`;
       document.getElementById('descripcion').textContent = producto.descripcion;
+
+      // Ingredientes
+      const listaIng = document.getElementById('ingredientes');
+      (producto.ingredientes || ["Información no disponible"]).forEach(i => {
+        const li = document.createElement('li');
+        li.textContent = i;
+        listaIng.appendChild(li);
+      });
+
+      // Modo de uso
+      document.getElementById('uso').textContent = producto.uso || "Consultar indicaciones en el envase.";
+
+      // Precio
       document.getElementById('precio').textContent = `$${producto.precio.toLocaleString('es-MX')}`;
+
+      // Promoción
+      if (producto.precio > 350) {
+        document.getElementById('promocion').textContent = "🎉 Promoción: 30% de descuento al registrarte como cliente preferente.";
+      }
     }
 
-    function preguntarCompra() {
-      alert(`💰 Precio de ${producto.nombre}: $${producto.precio.toLocaleString('es-MX')}
-¿Quieres comprarlo ahora?
-✅ Recuerda: al registrarte como cliente preferente obtienes 30% de descuento en cualquier producto mayor de $350 MXN.`);
+    function abrirRegistro() {
+      const modal = window.opener?.document.getElementById('registro-modal') || document.getElementById('registro-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('show');
+      } else {
+        alert("Registro disponible en la página principal.");
+      }
     }
   </script>
 </body>
