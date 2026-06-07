@@ -4,14 +4,66 @@
   <meta charset="UTF-8">
   <title>Detalle del Producto</title>
   <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .producto-detalle {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      margin: 40px auto;
+      max-width: 900px;
+    }
+    .producto-img-left {
+      flex: 1;
+    }
+    .producto-img-left img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .producto-info-right {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .producto-info-right h1 {
+      margin-bottom: 15px;
+    }
+    .producto-info-right p {
+      margin-bottom: 10px;
+    }
+    .btn-comprar {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .btn-comprar:hover {
+      background-color: #218838;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1 id="nombre"></h1>
-    <img id="imagen" style="max-width:400px; border-radius:10px; margin:20px 0;">
-    <p id="descripcion"></p>
-    <p><strong>Precio:</strong> <span id="precio"></span></p>
-    <a href="index.html" class="btn-producto">⬅ Volver al catálogo</a>
+  <!-- Barra de navegación -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html">⬅ Volver al catálogo</a>
+    </div>
+  </nav>
+
+  <!-- Layout producto -->
+  <div class="producto-detalle">
+    <div class="producto-img-left">
+      <img id="imagen" alt="Imagen producto">
+    </div>
+    <div class="producto-info-right">
+      <h1 id="nombre"></h1>
+      <p id="descripcion"></p>
+      <p><strong>Precio:</strong> <span id="precio"></span></p>
+      <button class="btn-comprar" onclick="preguntarCompra()">Ver precio</button>
+    </div>
   </div>
 
   <script src="js/productos.js"></script>
@@ -27,3 +79,11 @@
       document.getElementById('precio').textContent = `$${producto.precio.toLocaleString('es-MX')}`;
     }
 
+    function preguntarCompra() {
+      alert(`💰 Precio de ${producto.nombre}: $${producto.precio.toLocaleString('es-MX')}
+¿Quieres comprarlo ahora?
+✅ Recuerda: al registrarte como cliente preferente obtienes 30% de descuento en cualquier producto mayor de $350 MXN.`);
+    }
+  </script>
+</body>
+</html>
