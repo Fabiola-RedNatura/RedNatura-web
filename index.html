@@ -47,6 +47,8 @@
         <button class="filtro-btn" onclick="filtrarProductos('Energía y Rendimiento')">Energía</button>
         <button class="filtro-btn" onclick="filtrarProductos('Mujeres')">Mujer</button>
         <button class="filtro-btn" onclick="filtrarProductos('Hombres')">Hombre</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Adultos Mayores')">Adultos Mayores</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Deportistas')">Deportistas</button>
       </div>
       <div id="productos-grid" class="productos-grid"></div>
     </div>
@@ -98,8 +100,12 @@
       <span class="close-modal" onclick="cerrarRegistro()">&times;</span>
       <h2>Registro RedNatura</h2>
       <form id="registro-form">
-        <input type="text" id="nombre" placeholder="Nombre Completo" required>
-        <input type="tel" id="celular" placeholder="Número Celular" required>
+        <input type="text" id="nombre" placeholder="Nombre(s)" required>
+        <input type="text" id="apellido-paterno" placeholder="Apellido Paterno" required>
+        <input type="text" id="apellido-materno" placeholder="Apellido Materno" required>
+        <input type="tel" id="celular" placeholder="Número Telefónico" required>
+        <input type="text" id="nacimiento" placeholder="Lugar de nacimiento (Estado)" required>
+        <input type="date" id="fecha-nacimiento" required>
         <button type="submit" class="btn-submit">Registrarse</button>
       </form>
     </div>
@@ -111,4 +117,5 @@
   <script src="js/chatbot.js"></script>
 </body>
 </html>
+
 
