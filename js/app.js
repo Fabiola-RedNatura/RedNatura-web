@@ -26,13 +26,12 @@ function verDescripcion(productoId) {
 }
 
 // Filtrar productos desde botones
-function filtrarProductos(filtro) {
+function filtrarProductos(filtro, boton=null) {
   // Actualizar botones activos
   document.querySelectorAll('.filtro-btn').forEach(btn => {
     btn.classList.remove('active');
   });
-  // Marcar el botón actual
-  event.target.classList.add('active');
+  if (boton) boton.classList.add('active');
 
   renderProductos(filtro);
 }
