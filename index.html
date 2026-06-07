@@ -30,7 +30,7 @@
     <div class="hero-content">
       <h1>Bienvenido a RedNatura</h1>
       <p>Suplementos alimenticios naturales para tu bienestar integral</p>
-      <button class="cta-btn" onclick="toggleChat()">Habla con nuestro Agente IA</button>
+      <button class="cta-btn" onclick="toggleChat()">Habla con nuestro Asistente IA</button>
     </div>
   </section>
 
@@ -39,13 +39,13 @@
     <div class="container">
       <h2>Nuestros Productos</h2>
       <div class="filtros">
-        <button class="filtro-btn" onclick="filtrarProductos('todos')">Todos</button>
-        <button class="filtro-btn" onclick="filtrarProductos('digestiva')">Digestión</button>
-        <button class="filtro-btn" onclick="filtrarProductos('mental')">Mental</button>
-        <button class="filtro-btn" onclick="filtrarProductos('peso')">Peso</button>
-        <button class="filtro-btn" onclick="filtrarProductos('energia')">Energía</button>
-        <button class="filtro-btn" onclick="filtrarProductos('belleza')">Belleza</button>
-        <button class="filtro-btn" onclick="filtrarProductos('sistema-inmunologico')">Inmunológico</button>
+        <button class="filtro-btn" onclick="filtrarProductos('todos', this)">Todos</button>
+        <button class="filtro-btn" onclick="filtrarProductos('digestiva', this)">Digestión</button>
+        <button class="filtro-btn" onclick="filtrarProductos('mental', this)">Mental</button>
+        <button class="filtro-btn" onclick="filtrarProductos('peso', this)">Peso</button>
+        <button class="filtro-btn" onclick="filtrarProductos('energia', this)">Energía</button>
+        <button class="filtro-btn" onclick="filtrarProductos('belleza', this)">Belleza</button>
+        <button class="filtro-btn" onclick="filtrarProductos('sistema-inmunologico', this)">Inmunológico</button>
       </div>
       <div id="productos-grid" class="productos-grid"></div>
     </div>
@@ -114,5 +114,6 @@
   <script src="js/chatbot.js"></script>
 </body>
 </html>
+
 
 
