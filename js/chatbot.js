@@ -35,9 +35,15 @@ function mostrarProductosPorCategoria(categoria) {
     mostrarMensajeBot(`${prod.nombre}`, [
       { texto: "Ver precio", accion: () => mostrarMensajeBot(
         `💰 Precio de ${prod.nombre}: $${prod.precio.toLocaleString('es-MX')}
-✅ Recuerda: al registrarte como cliente preferente obtienes 30% de descuento en cualquier producto mayor de $350 MXN.`
+¿Quieres comprarlo ahora?`,
+        [
+          { texto: "Sí, comprar", accion: () => mostrarMensajeBot(
+            `✅ Recuerda: al registrarte como cliente preferente obtienes 30% de descuento en cualquier producto mayor de $350 MXN.`
+          ) },
+          { texto: "No, gracias", accion: () => mostrarMensajeBot("De acuerdo 👍, puedes seguir explorando productos.") }
+        ]
       ) },
-      { texto: "Ver descripción", accion: () => mostrarMensajeBot(`ℹ️ ${prod.descripcion}`) },
+      { texto: "Ver descripción", accion: () => verDescripcion(prod.id) },
       { texto: "Registrarme", accion: () => abrirModalRegistro(prod) }
     ]);
   });
@@ -49,7 +55,7 @@ function mostrarRecomendaciones() {
     { texto: "Hombre", accion: () => mostrarProductosPorCategoria("hombres") },
     { texto: "Niños", accion: () => mostrarProductosPorCategoria("nutrición infantil") },
     { texto: "Deportistas", accion: () => mostrarProductosPorCategoria("energia") },
-    { texto: "Adultos Mayores", accion: () => mostrarProductosPorCategoria("articulaciones y movilidad") }
+    { texto: "Adultos Mayores", accion: () => mostrarProductosPorCategoria("sistema-inmunologico") }
   ]);
 }
 
@@ -187,6 +193,5 @@ Nos pondremos en contacto contigo para tu compra.`
 
   // También enviar por correo
   const mailto = `mailto:fabiola250204@gmail.com?subject=Nuevo registro RedNatura&body=${mensaje}`;
-  window.open(mailto, '_blank');
+  window
 }
-
