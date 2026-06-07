@@ -16,9 +16,8 @@ function toggleChat() {
 
 function mostrarCategorias() {
   const categorias = [
-    "Salud Digestiva","Bienestar Mental","Mujeres","Control de Peso",
-    "Energía y Rendimiento","Belleza y Antienvejecimiento","Sistema Inmunológico",
-    "Nutrición Infantil","Articulaciones y Movilidad","Hombres"
+    "digestiva","mental","peso","energia","belleza","sistema-inmunologico",
+    "Adultos Mayores","Deportistas"
   ];
   mostrarMensajeBot("📋 Selecciona una categoría:", categorias.map(cat => ({
     texto: cat, accion: () => mostrarProductosPorCategoria(cat)
@@ -34,26 +33,23 @@ function mostrarProductosPorCategoria(categoria) {
 
   filtrados.forEach(prod => {
     mostrarMensajeBot(`${prod.nombre}`, [
-      { texto: "Ver precio", accion: () => mostrarMensajeBot(`💰 Precio de ${prod.nombre}: ${prod.precio}`) },
+      { texto: "Ver precio", accion: () => mostrarMensajeBot(
+        `💰 Precio de ${prod.nombre}: $${prod.precio.toLocaleString('es-MX')}
+✅ Recuerda: al registrarte como cliente preferente obtienes 30% de descuento en cualquier producto mayor de $350 MXN.`
+      ) },
       { texto: "Ver descripción", accion: () => mostrarMensajeBot(`ℹ️ ${prod.descripcion}`) },
-      { texto: "Registrarme", accion: () => mostrarMensajeBot(
-        `✅ Al registrarte como cliente preferente obtienes 30% de descuento en cualquier producto mayor de $350 MXN.\n\n¿Quieres abrir el formulario de registro?`,
-        [
-          { texto: "Sí, registrarme", accion: () => abrirModalRegistro(prod) },
-          { texto: "No, gracias", accion: () => mostrarMensajeBot("De acuerdo 👍. Puedes seguir explorando productos.") }
-        ]
-      )}
+      { texto: "Registrarme", accion: () => abrirModalRegistro(prod) }
     ]);
   });
 }
 
 function mostrarRecomendaciones() {
   mostrarMensajeBot("👥 ¿Para quién necesitas recomendaciones?", [
-    { texto: "Mujer", accion: () => mostrarProductosPorCategoria("Mujeres") },
-    { texto: "Hombre", accion: () => mostrarProductosPorCategoria("Hombres") },
-    { texto: "Niños", accion: () => mostrarProductosPorCategoria("Nutrición Infantil") },
-    { texto: "Deportistas", accion: () => mostrarProductosPorCategoria("Energía y Rendimiento") },
-    { texto: "Adultos Mayores", accion: () => mostrarProductosPorCategoria("Articulaciones y Movilidad") }
+    { texto: "Mujer", accion: () => mostrarProductosPorCategoria("mujeres") },
+    { texto: "Hombre", accion: () => mostrarProductosPorCategoria("hombres") },
+    { texto: "Niños", accion: () => mostrarProductosPorCategoria("nutrición infantil") },
+    { texto: "Deportistas", accion: () => mostrarProductosPorCategoria("energia") },
+    { texto: "Adultos Mayores", accion: () => mostrarProductosPorCategoria("articulaciones y movilidad") }
   ]);
 }
 
@@ -63,8 +59,42 @@ function pedirUbicacion() {
 }
 
 function procesarUbicacion(ubicacion) {
-  mostrarMensajeBot(`✅ Sucursal encontrada en ${ubicacion}. Horario: Lunes a Domingo 9:00 AM - 9:00 PM`);
+  const ciudad = ubicacion.trim().toLowerCase();
+  const sucursal = sucursales.find(s =>
+    s.ciudad.toLowerCase() === ciudad || s.estado.toLowerCase() === ciudad
+  );
+
+  if (sucursal) {
+    mostrarMensajeBot(`✅ Sucursal encontrada en ${sucursal.ciudad}, ${sucursal.estado}.
+Horario: Lunes a Viernes 9:00 AM - 7:00 PM, Sábados 9:00 AM - 2:00 PM.
+ℹ️ Para obtener la dirección completa de la sucursal es necesario realizar tu registro.`);
+  } else {
+    mostrarMensajeBot(`❌ No tenemos registrada una sucursal en "${ubicacion}". Intenta con otra ciudad o estado donde RedNatura esté presente.`);
+  }
   estado = 'esperando_opcion';
+}
+
+function analizarSintomas(texto) {
+  const t = texto.toLowerCase();
+  if (t.includes("cansancio") || t.includes("fatiga")) {
+    mostrarMensajeBot("🔋 Te recomiendo suplementos alimenticios de la categoría Energía y Rendimiento.");
+  } else if (t.includes("digest")) {
+    mostrarMensajeBot("🌿 Te recomiendo suplementos alimenticios de la categoría Salud Digestiva.");
+  } else if (t.includes("estrés") || t.includes("ansiedad")) {
+    mostrarMensajeBot("🧘 Te recomiendo suplementos alimenticios de la categoría Bienestar Mental.");
+  } else {
+    mostrarMensajeBot("ℹ️ Recuerda que todos nuestros productos son suplementos alimenticios. ¿Quieres atención personalizada?", [
+      { texto: "Sí", accion: () => abrirWhatsAppPersonalizado() },
+      { texto: "No", accion: () => mostrarMensajeBot("De acuerdo 👍, puedes seguir explorando el catálogo.") }
+    ]);
+  }
+}
+
+function abrirWhatsAppPersonalizado() {
+  const numeroCliente = "5555070734";
+  const mensaje = encodeURIComponent("Hola, quiero atención personalizada sobre suplementos alimenticios.");
+  const url = `https://wa.me/52${numeroCliente}?text=${mensaje}`;
+  window.open(url, '_blank');
 }
 
 function mostrarMensajeBot(mensaje, opciones=[]) {
@@ -112,7 +142,7 @@ function sendMessage() {
   if (estado === 'esperando_ubicacion') {
     procesarUbicacion(mensaje);
   } else {
-    mostrarMensajeBot("No entendí bien tu pregunta. 🤔 Usa los botones para navegar.");
+    analizarSintomas(mensaje);
   }
 }
 
@@ -125,8 +155,13 @@ function abrirModalRegistro(producto) {
   form.onsubmit = function(e) {
     e.preventDefault();
     const nombre = document.getElementById('nombre').value;
+    const apellidoPaterno = document.getElementById('apellido-paterno').value;
+    const apellidoMaterno = document.getElementById('apellido-materno').value;
     const celular = document.getElementById('celular').value;
-    enviarWhatsAppRegistro({ nombre, celular, producto });
+    const nacimiento = document.getElementById('nacimiento').value;
+    const fechaNacimiento = document.getElementById('fecha-nacimiento').value;
+
+    enviarWhatsAppRegistro({ nombre, apellidoPaterno, apellidoMaterno, celular, nacimiento, fechaNacimiento, producto });
     cerrarRegistro();
   };
 }
@@ -138,11 +173,20 @@ function cerrarRegistro() {
 }
 
 function enviarWhatsAppRegistro(datos) {
-  const numeroCliente = "5555070734"; // tu número fijo
+  const numeroCliente = "5555070734";
   const mensaje = encodeURIComponent(
-    `Hola ${datos.nombre}, gracias por registrarte en RedNatura. Producto: ${datos.producto?.nombre || ''}. Nos pondremos en contacto contigo para tu compra.`
+    `Hola ${datos.nombre} ${datos.apellidoPaterno} ${datos.apellidoMaterno}, gracias por registrarte en RedNatura.
+Tel: ${datos.celular}
+Lugar de nacimiento: ${datos.nacimiento}
+Fecha de nacimiento: ${datos.fechaNacimiento}
+Producto: ${datos.producto?.nombre || ''}.
+Nos pondremos en contacto contigo para tu compra.`
   );
   const url = `https://wa.me/52${numeroCliente}?text=${mensaje}`;
   window.open(url, '_blank');
+
+  // También enviar por correo
+  const mailto = `mailto:fabiola250204@gmail.com?subject=Nuevo registro RedNatura&body=${mensaje}`;
+  window.open(mailto, '_blank');
 }
 
