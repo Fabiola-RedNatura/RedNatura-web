@@ -16,8 +16,7 @@ function toggleChat() {
 
 function mostrarCategorias() {
   const categorias = [
-    "digestiva","mental","peso","energia","belleza","sistema-inmunologico",
-    "Adultos Mayores","Deportistas"
+    "digestiva","mental","peso","energia","belleza","sistema-inmunologico"
   ];
   mostrarMensajeBot("📋 Selecciona una categoría:", categorias.map(cat => ({
     texto: cat, accion: () => mostrarProductosPorCategoria(cat)
@@ -51,9 +50,9 @@ function mostrarProductosPorCategoria(categoria) {
 
 function mostrarRecomendaciones() {
   mostrarMensajeBot("👥 ¿Para quién necesitas recomendaciones?", [
-    { texto: "Mujer", accion: () => mostrarProductosPorCategoria("mujeres") },
-    { texto: "Hombre", accion: () => mostrarProductosPorCategoria("hombres") },
-    { texto: "Niños", accion: () => mostrarProductosPorCategoria("nutrición infantil") },
+    { texto: "Mujer", accion: () => mostrarProductosPorCategoria("digestiva") },
+    { texto: "Hombre", accion: () => mostrarProductosPorCategoria("energia") },
+    { texto: "Niños", accion: () => mostrarProductosPorCategoria("sistema-inmunologico") },
     { texto: "Deportistas", accion: () => mostrarProductosPorCategoria("energia") },
     { texto: "Adultos Mayores", accion: () => mostrarProductosPorCategoria("sistema-inmunologico") }
   ]);
@@ -188,10 +187,12 @@ Fecha de nacimiento: ${datos.fechaNacimiento}
 Producto: ${datos.producto?.nombre || ''}.
 Nos pondremos en contacto contigo para tu compra.`
   );
+
+  // Enviar a WhatsApp
   const url = `https://wa.me/52${numeroCliente}?text=${mensaje}`;
   window.open(url, '_blank');
 
   // También enviar por correo
   const mailto = `mailto:fabiola250204@gmail.com?subject=Nuevo registro RedNatura&body=${mensaje}`;
-  window
+  window.open(mailto, '_blank');
 }
