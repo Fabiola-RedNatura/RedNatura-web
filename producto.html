@@ -8,9 +8,9 @@
     .producto-detalle {
       display: flex;
       flex-direction: row;
-      gap: 20px;
+      gap: 30px;
       margin: 40px auto;
-      max-width: 1000px;
+      max-width: 1100px;
     }
     .producto-img-left {
       flex: 1;
@@ -18,6 +18,7 @@
     .producto-img-left img {
       width: 100%;
       border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
     .producto-info-right {
       flex: 2;
@@ -27,18 +28,22 @@
     }
     .producto-info-right h1 {
       margin-bottom: 15px;
+      font-size: 2rem;
+      color: #2c3e50;
     }
-    .producto-info-right p {
-      margin-bottom: 10px;
+    .producto-info-right p, .producto-info-right li {
+      margin-bottom: 8px;
+      line-height: 1.5;
     }
     .btn-comprar {
       background-color: #28a745;
       color: white;
-      padding: 10px 15px;
+      padding: 12px 20px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin-top: 15px;
+      margin-top: 20px;
+      font-size: 1rem;
     }
     .btn-comprar:hover {
       background-color: #218838;
@@ -56,13 +61,17 @@
   <!-- Layout producto -->
   <div class="producto-detalle">
     <div class="producto-img-left">
+      <!-- Ejemplo: zendra.png -->
       <img id="imagen" alt="Imagen producto">
     </div>
     <div class="producto-info-right">
       <h1 id="nombre"></h1>
       <p id="descripcion"></p>
+      <p><strong>Presentación:</strong> <span id="presentacion"></span></p>
       <h3>Ingredientes</h3>
       <ul id="ingredientes"></ul>
+      <h3>Beneficios</h3>
+      <ul id="beneficios"></ul>
       <h3>Modo de uso</h3>
       <p id="uso"></p>
       <p><strong>Precio:</strong> <span id="precio"></span></p>
@@ -79,25 +88,29 @@
 
     if (producto) {
       document.getElementById('nombre').textContent = producto.nombre;
-      document.getElementById('imagen').src = `img/${producto.id}.png`;
+      document.getElementById('imagen').src = `img/${producto.nombre.toLowerCase().replace(/ /g,'-')}.png`; 
       document.getElementById('descripcion').textContent = producto.descripcion;
+      document.getElementById('presentacion').textContent = producto.presentacion;
+      document.getElementById('uso').textContent = producto.modoUso;
+      document.getElementById('precio').textContent = producto.precio;
 
       // Ingredientes
-      const listaIng = document.getElementById('ingredientes');
-      (producto.ingredientes || ["Información no disponible"]).forEach(i => {
+      producto.ingredientes.forEach(i => {
         const li = document.createElement('li');
         li.textContent = i;
-        listaIng.appendChild(li);
+        document.getElementById('ingredientes').appendChild(li);
       });
 
-      // Modo de uso
-      document.getElementById('uso').textContent = producto.uso || "Consultar indicaciones en el envase.";
+      // Beneficios
+      producto.beneficios.forEach(b => {
+        const li = document.createElement('li');
+        li.textContent = b;
+        document.getElementById('beneficios').appendChild(li);
+      });
 
-      // Precio
-      document.getElementById('precio').textContent = `$${producto.precio.toLocaleString('es-MX')}`;
-
-      // Promoción
-      if (producto.precio > 350) {
+      // Promoción si el precio es mayor a 350
+      const precioNum = parseFloat(producto.precio.replace('$','').replace(',',''));
+      if (precioNum > 350) {
         document.getElementById('promocion').textContent = "🎉 Promoción: 30% de descuento al registrarte como cliente preferente.";
       }
     }
