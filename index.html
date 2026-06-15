@@ -2,111 +2,56 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RedNatura - Suplementos Alimenticios</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <title>Catálogo RedNatura</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Navegación -->
-  <nav class="navbar">
-    <div class="container">
-      <div class="logo">
-        <img src="logo.png" alt="Logo" width="60">
-        <h1>RedNatura</h1>
-        <p>Representante Fabiola</p>
+  <!-- Encabezado -->
+  <header>
+    <h1>Catálogo RedNatura</h1>
+    <p>Descubre nuestros productos y sucursales</p>
+  </header>
+
+  <main>
+    <!-- Sección de productos -->
+    <section id="productos">
+      <!-- Aquí se insertan dinámicamente las tarjetas desde productos.js -->
+    </section>
+
+    <!-- Sección del chatbot -->
+    <section id="chatbot">
+      <h2>Asistente RedNatura</h2>
+      <div id="chat-window"></div>
+      <div id="chat-controls">
+        <input type="text" id="chat-input" placeholder="Escribe aquí...">
+        <button id="send-btn">Enviar</button>
       </div>
-      <ul class="nav-links">
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#productos">Productos</a></li>
-        <li><a href="#sucursales">Sucursales</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-        <li><button class="chat-btn" onclick="toggleChat()">💬 Chat IA</button></li>
-      </ul>
-    </div>
-  </nav>
+    </section>
 
-  <!-- Hero -->
-  <section id="inicio" class="hero">
-    <div class="hero-content">
-      <h1>Bienvenido a RedNatura</h1>
-      <p>Suplementos alimenticios naturales para tu bienestar integral</p>
-      <button class="cta-btn" onclick="toggleChat()">Habla con nuestro Asistente IA</button>
-    </div>
-  </section>
-
-  <!-- Productos -->
-  <section id="productos" class="productos">
-    <div class="container">
-      <h2>Nuestros Productos</h2>
-      <div class="filtros">
-        <button class="filtro-btn" onclick="filtrarProductos('todos', this)">Todos</button>
-        <button class="filtro-btn" onclick="filtrarProductos('digestiva', this)">Digestión</button>
-        <button class="filtro-btn" onclick="filtrarProductos('mental', this)">Mental</button>
-        <button class="filtro-btn" onclick="filtrarProductos('peso', this)">Peso</button>
-        <button class="filtro-btn" onclick="filtrarProductos('energia', this)">Energía</button>
-        <button class="filtro-btn" onclick="filtrarProductos('belleza', this)">Belleza</button>
-        <button class="filtro-btn" onclick="filtrarProductos('sistema-inmunologico', this)">Inmunológico</button>
-      </div>
-      <div id="productos-grid" class="productos-grid"></div>
-    </div>
-  </section>
-
-  <!-- Sucursales -->
-  <section id="sucursales" class="sucursales">
-    <div class="container">
-      <h2>Nuestras Sucursales</h2>
-      <p>Visítanos en más de 30 ciudades de la República Mexicana</p>
-      <div id="sucursales-grid" class="sucursales-grid"></div>
-    </div>
-  </section>
-
-  <!-- Contacto -->
-  <section id="contacto" class="contacto">
-    <div class="container">
-      <h2>Contacto RedNatura</h2>
-      <p>¿Tienes preguntas? Estamos aquí para ayudarte</p>
-      <div class="contacto-info">
-        <div class="info-item contact-card">
-          <span class="icon">📞</span>
-          <p>Teléfono: 5555070734</p>
-        </div>
-        <div class="info-item contact-card">
-          <span class="icon">📧</span>
-          <p>Email: fabiola250204@gmail.com</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Chatbot -->
-  <div id="chatbot" class="chatbot-container hidden">
-    <div class="chatbot-header">
-      <h3>🤖 Asistente RedNatura</h3>
-      <button class="close-btn" onclick="toggleChat()">✕</button>
-    </div>
-    <div id="chat-messages" class="chat-messages"></div>
-    <div class="chat-input-area">
-      <input type="text" id="chat-input" placeholder="Escribe tu ciudad o pregunta..." onkeypress="handleChatInput(event)">
-      <button onclick="sendMessage()">Enviar</button>
-    </div>
-  </div>
-
-  <!-- Modal Registro -->
-  <div id="registro-modal" class="modal hidden">
-    <div class="modal-content">
-      <span class="close-modal" onclick="cerrarRegistro()">&times;</span>
-      <h2>Registro RedNatura</h2>
+    <!-- Formulario de registro para compra -->
+    <section id="registro" style="display:none;">
+      <h2>Registro de compra</h2>
       <form id="registro-form">
-        <input type="text" id="nombre" placeholder="Nombre(s)" required>
-        <input type="text" id="apellido-paterno" placeholder="Apellido Paterno" required>
-        <input type="text" id="apellido-materno" placeholder="Apellido Materno" required>
-        <input type="tel" id="celular" placeholder="Número Telefónico" required>
-        <input type="text" id="nacimiento" placeholder="Lugar de nacimiento (Estado)" required>
-        <input type="date" id="fecha-nacimiento" required>
-        <button type="submit" class="btn-submit">Registrarse</button>
+        <label>Nombre:</label>
+        <input type="text" id="nombre" required>
+        <label>Apellidos:</label>
+        <input type="text" id="apellidos" required>
+        <label>Teléfono:</label>
+        <input type="tel" id="telefono" required>
+        <label>Lugar de nacimiento:</label>
+        <input type="text" id="lugar" required>
+        <label>Fecha de nacimiento:</label>
+        <input type="date" id="fecha" required>
+        <button type="submit">Enviar registro</button>
       </form>
-    </div>
-  </div>
+      <p>🎁 Al registrarte obtienes <strong>30% de descuento</strong> en compras mayores a $350 MXN.</p>
+    </section>
+  </main>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>© 2026 RedNatura - Todos los derechos reservados</p>
+  </footer>
 
   <!-- Scripts -->
   <script src="js/productos.js"></script>
@@ -114,6 +59,4 @@
   <script src="js/chatbot.js"></script>
 </body>
 </html>
-
-
 
