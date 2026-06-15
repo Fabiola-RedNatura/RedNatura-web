@@ -111,5 +111,3 @@ Producto: ${datos.producto}`);
   document.getElementById("registro").style.display = "none";
 }
 
-
-
