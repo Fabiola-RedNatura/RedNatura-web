@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Catálogo RedNatura</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <!-- Encabezado -->
@@ -13,7 +13,7 @@
   </header>
 
   <main>
-    <!-- Sección de filtros -->
+    <!-- Filtros de categorías -->
     <nav id="filtros">
       <button class="filtro-btn active" onclick="filtrarProductos('todos', this)">Todos</button>
       <button class="filtro-btn" onclick="filtrarProductos('Niños', this)">Niños</button>
@@ -28,7 +28,10 @@
     </nav>
 
     <!-- Grid de productos -->
-    <section id="productos-grid" class="grid"></section>
+    <section>
+      <h2>Productos</h2>
+      <div id="productos-grid" class="grid"></div>
+    </section>
 
     <!-- Grid de sucursales -->
     <section>
@@ -78,4 +81,5 @@
   <script src="js/chatbot.js"></script>
 </body>
 </html>
+
 
