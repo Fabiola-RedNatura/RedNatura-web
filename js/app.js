@@ -10,8 +10,8 @@ function renderProductos(filtro = 'todos') {
     const card = document.createElement('div');
     card.className = 'producto-card';
 
-    // Nombre del archivo de imagen basado en el nombre del producto (sin espacios y en minúsculas)
-    const nombreImagen = producto.nombre.toLowerCase().replace(/\s+/g, '-') + ".png";
+    // Usar id para las imágenes (más seguro)
+    const nombreImagen = producto.id + ".png";
 
     card.innerHTML = `
       <img src="img/${nombreImagen}" alt="${producto.nombre}" class="producto-img">
@@ -39,7 +39,6 @@ function verPrecio(productoId) {
 
 // Filtrar productos desde botones
 function filtrarProductos(filtro, boton=null) {
-  // Actualizar botones activos
   document.querySelectorAll('.filtro-btn').forEach(btn => {
     btn.classList.remove('active');
   });
@@ -48,7 +47,7 @@ function filtrarProductos(filtro, boton=null) {
   renderProductos(filtro);
 }
 
-// Renderizar sucursales (solo las definidas en tu arreglo sucursales.js)
+// Renderizar sucursales
 function renderSucursales() {
   const grid = document.getElementById('sucursales-grid');
   grid.innerHTML = '';
@@ -70,4 +69,3 @@ window.addEventListener('DOMContentLoaded', () => {
   renderProductos();
   renderSucursales();
 });
-
