@@ -61,22 +61,25 @@ function mostrarRecomendaciones() {
 }
 
 function pedirUbicacion() {
-  mostrarMensajeBot("📍 Escribe tu ciudad o estado para mostrarte la sucursal más cercana.");
-  estado = 'esperando_ubicacion';
+  mostrarMensajeBot("📍 Dinos de qué estado nos contactas para mostrarte la sucursal más cercana.");
+  estado = 'esperando_estado';
 }
 
 function procesarUbicacion(ubicacion) {
-  const ciudad = ubicacion.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const estadoNormalizado = ubicacion.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   const sucursal = sucursales.find(s =>
-    s.ciudad.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === ciudad ||
-    s.estado.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === ciudad
+    s.estado.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === estadoNormalizado
   );
 
   if (sucursal) {
-    mostrarMensajeBot(`✅ Sucursal encontrada en ${sucursal.ciudad}, ${sucursal.estado}.
-Horario: Lunes a Viernes 9:00 AM - 7:00 PM, Sábados 9:00 AM - 2:00 PM.`);
+    mostrarMensajeBot(`✅ Tenemos sucursal en ${sucursal.ciudad}, ${sucursal.estado}.
+Horario: Lunes a Viernes 9:00 AM - 7:00 PM, Sábados 9:00 AM - 2:00 PM.
+Para obtener información más precisa, completa tu registro.`);
+
+    // Abrir modal de registro automáticamente
+    abrirModalRegistro({ nombre: `Sucursal ${sucursal.ciudad}`, precio: "", id: 0 });
   } else {
-    mostrarMensajeBot(`❌ No tenemos registrada una sucursal en "${ubicacion}". Intenta con otra ciudad o estado donde RedNatura esté presente.`);
+    mostrarMensajeBot(`❌ No tenemos registrada una sucursal en "${ubicacion}". Intenta con otro estado donde RedNatura esté presente.`);
   }
   estado = 'esperando_opcion';
 }
@@ -136,7 +139,7 @@ function sendMessage() {
   mostrarMensajeUsuario(mensaje);
   input.value = '';
 
-  if (estado === 'esperando_ubicacion') {
+  if (estado === 'esperando_estado') {
     procesarUbicacion(mensaje);
   } else {
     analizarSintomas(mensaje);
@@ -176,8 +179,8 @@ function enviarWhatsAppRegistro(datos) {
 Tel: ${datos.celular}
 Lugar de nacimiento: ${datos.nacimiento}
 Fecha de nacimiento: ${datos.fechaNacimiento}
-Producto: ${datos.producto?.nombre || ''}.
-Nos pondremos en contacto contigo para tu compra.`
+Sucursal/Producto: ${datos.producto?.nombre || ''}.
+✅ Hemos recibido tu registro y pronto nos pondremos en contacto contigo.`
   );
 
   const url = `https://wa.me/52${numeroCliente}?text=${mensaje}`;
@@ -186,4 +189,5 @@ Nos pondremos en contacto contigo para tu compra.`
   const mailto = `mailto:fabiola250204@gmail.com?subject=Nuevo registro RedNatura&body=${mensaje}`;
   window.open(mailto, '_blank');
 }
+
 
