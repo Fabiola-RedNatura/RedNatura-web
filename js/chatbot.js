@@ -74,8 +74,7 @@ function procesarUbicacion(ubicacion) {
 
   if (sucursal) {
     mostrarMensajeBot(`✅ Sucursal encontrada en ${sucursal.ciudad}, ${sucursal.estado}.
-Horario: Lunes a Viernes 9:00 AM - 7:00 PM, Sábados 9:00 AM - 2:00 PM.
-ℹ️ Para obtener la dirección completa de la sucursal es necesario realizar tu registro.`);
+Horario: Lunes a Viernes 9:00 AM - 7:00 PM, Sábados 9:00 AM - 2:00 PM.`);
   } else {
     mostrarMensajeBot(`❌ No tenemos registrada una sucursal en "${ubicacion}". Intenta con otra ciudad o estado donde RedNatura esté presente.`);
   }
@@ -91,10 +90,7 @@ function analizarSintomas(texto) {
   } else if (t.includes("estrés") || t.includes("ansiedad")) {
     mostrarMensajeBot("🧘 Te recomiendo suplementos alimenticios de la categoría Mental.");
   } else {
-    mostrarMensajeBot("ℹ️ Recuerda que todos nuestros productos son suplementos alimenticios. ¿Quieres atención personalizada?", [
-      { texto: "Sí", accion: () => abrirWhatsAppPersonalizado() },
-      { texto: "No", accion: () => mostrarMensajeBot("De acuerdo 👍, puedes seguir explorando el catálogo.") }
-    ]);
+    mostrarMensajeBot("ℹ️ Recuerda que todos nuestros productos son suplementos alimenticios.");
   }
 }
 
@@ -197,4 +193,3 @@ Nos pondremos en contacto contigo para tu compra.`
   const mailto = `mailto:fabiola250204@gmail.com?subject=Nuevo registro RedNatura&body=${mensaje}`;
   window.open(mailto, '_blank');
 }
-
