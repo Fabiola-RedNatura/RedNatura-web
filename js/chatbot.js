@@ -110,4 +110,3 @@ Producto: ${datos.producto}`);
   mostrarMensaje("✅ Registro enviado a tu correo y se abrió WhatsApp para confirmar tu interés.");
   document.getElementById("registro").style.display = "none";
 }
-
