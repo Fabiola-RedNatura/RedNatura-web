@@ -2,100 +2,119 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>RedNatura - Catálogo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RedNatura - Representante Fabiola</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <!-- Barra de navegación -->
   <nav class="navbar">
     <div class="container">
       <div class="logo">
         <h1>RedNatura</h1>
-        <p>Suplementos alimenticios naturales</p>
+        <p>Representante Fabiola</p>
       </div>
+
       <ul class="nav-links">
         <li><a href="#productos">Productos</a></li>
         <li><a href="#sucursales">Sucursales</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
+
       <button class="chat-btn" onclick="toggleChat()">Asistente IA</button>
     </div>
   </nav>
 
-  <!-- Hero -->
   <section class="hero">
     <div class="hero-content">
       <h1>Bienvenido a RedNatura</h1>
       <p>Suplementos alimenticios naturales para tu bienestar integral</p>
-      <p class="subtitulo">Descubre nuestro catálogo y encuentra el producto ideal para ti.</p>
+      <p class="subtitulo">
+        Descubre el catálogo de productos RedNatura con atención personalizada de Fabiola.
+      </p>
       <button class="cta-btn" onclick="toggleChat()">Habla con nuestro Asistente IA</button>
     </div>
   </section>
 
-  <!-- Productos -->
   <section id="productos" class="productos">
     <div class="container">
       <h2>Nuestros Productos</h2>
       <p class="descripcion">Explora nuestras categorías y encuentra lo que necesitas</p>
+
       <div class="filtros">
         <button class="filtro-btn active" onclick="filtrarProductos('todos', this)">Todos</button>
         <button class="filtro-btn" onclick="filtrarProductos('Digestión', this)">Digestión</button>
         <button class="filtro-btn" onclick="filtrarProductos('Mental', this)">Mental</button>
         <button class="filtro-btn" onclick="filtrarProductos('Mujeres', this)">Mujeres</button>
         <button class="filtro-btn" onclick="filtrarProductos('Control de Peso', this)">Control de Peso</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Glucosa', this)">Glucosa</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Urinario', this)">Urinario</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Inmunológico', this)">Inmunológico</button>
         <button class="filtro-btn" onclick="filtrarProductos('Energía', this)">Energía</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Desintoxicación', this)">Desintoxicación</button>
         <button class="filtro-btn" onclick="filtrarProductos('Niños', this)">Niños</button>
         <button class="filtro-btn" onclick="filtrarProductos('Antioxidantes', this)">Antioxidantes</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Circulación', this)">Circulación</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Articulaciones', this)">Articulaciones</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Belleza', this)">Belleza</button>
+        <button class="filtro-btn" onclick="filtrarProductos('Hombres', this)">Hombres</button>
       </div>
+
       <div id="productos-grid" class="productos-grid"></div>
     </div>
   </section>
 
-  <!-- Sucursales -->
   <section id="sucursales" class="sucursales">
     <div class="container">
       <h2>Nuestras Sucursales</h2>
       <p>Encuentra la sucursal más cercana a ti</p>
+      <p class="horario">Horario general: Lunes a Viernes 9:00 AM - 7:00 PM | Sábados 9:00 AM - 2:00 PM</p>
       <div id="sucursales-grid" class="sucursales-grid"></div>
     </div>
   </section>
 
-  <!-- Contacto -->
   <section id="contacto" class="contacto">
     <div class="container">
       <h2>Contacto</h2>
       <p>Estamos aquí para ayudarte</p>
+
       <div class="contacto-info">
         <div class="info-item">
           <span class="icon">📞</span>
-          <p>Teléfono: 5555070734</p>
+          <p><strong>Teléfono:</strong> 5555070734</p>
         </div>
+
         <div class="info-item">
           <span class="icon">📧</span>
-          <p>Email: fabiola250204@gmail.com</p>
+          <p><strong>Email:</strong> fabiola250204@gmail.com</p>
+        </div>
+
+        <div class="info-item">
+          <span class="icon">💬</span>
+          <p><strong>Atención personalizada:</strong> Representante Fabiola</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Chatbot -->
   <div id="chatbot" class="chatbot-container hidden">
     <div class="chatbot-header">
       <h3>Asistente RedNatura</h3>
       <button class="close-btn" onclick="toggleChat()">×</button>
     </div>
+
     <div id="chat-messages" class="chat-messages"></div>
+
     <div class="chat-input-area">
       <input id="chat-input" type="text" placeholder="Escribe aquí..." onkeypress="handleChatInput(event)">
       <button onclick="sendMessage()">Enviar</button>
     </div>
   </div>
 
-  <!-- Modal de registro -->
   <div id="registro-modal" class="modal">
     <div class="modal-content">
       <span class="close-modal" onclick="cerrarRegistro()">×</span>
       <h2>Registro de compra</h2>
+
       <form id="registro-form">
         <input type="text" id="nombre" placeholder="Nombre" required>
         <input type="text" id="apellido-paterno" placeholder="Apellido paterno" required>
@@ -108,12 +127,10 @@
     </div>
   </div>
 
-  <!-- Footer -->
   <footer class="footer">
-    <p>© 2026 RedNatura - Todos los derechos reservados</p>
+    <p>© 2026 RedNatura - Representante Fabiola</p>
   </footer>
 
-  <!-- Scripts -->
   <script src="js/productos.js"></script>
   <script src="js/sucursales.js"></script>
   <script src="js/app.js"></script>
