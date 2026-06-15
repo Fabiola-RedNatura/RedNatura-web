@@ -14,7 +14,7 @@ function renderProductos(filtro = 'todos') {
       <img src="img/${nombreImagen}" alt="${producto.nombre}" class="producto-img">
       <h3>${producto.nombre}</h3>
       <p>${producto.descripcionCorta}</p>
-      <div class="precio">${producto.precio}</div>
+      <div class="precio">$${producto.precio}</div>
       <button class="btn-producto" onclick="verDescripcion(${producto.id})">Ver descripción</button>
       <button class="btn-precio" onclick="verPrecio(${producto.id})">Precio</button>
     `;
