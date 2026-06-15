@@ -94,13 +94,6 @@ function analizarSintomas(texto) {
   }
 }
 
-function abrirWhatsAppPersonalizado() {
-  const numeroCliente = "5555070734";
-  const mensaje = encodeURIComponent("Hola, quiero atención personalizada sobre suplementos alimenticios.");
-  const url = `https://wa.me/52${numeroCliente}?text=${mensaje}`;
-  window.open(url, '_blank');
-}
-
 function mostrarMensajeBot(mensaje, opciones=[]) {
   const messagesDiv = document.getElementById('chat-messages');
   const messageDiv = document.createElement('div');
@@ -193,3 +186,4 @@ Nos pondremos en contacto contigo para tu compra.`
   const mailto = `mailto:fabiola250204@gmail.com?subject=Nuevo registro RedNatura&body=${mensaje}`;
   window.open(mailto, '_blank');
 }
+
