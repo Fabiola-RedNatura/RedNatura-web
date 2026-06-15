@@ -15,7 +15,7 @@ function toggleChat() {
 }
 
 function mostrarCategorias() {
-  const categorias = ["digestiva","mental","peso","energia","belleza","sistema-inmunologico"];
+  const categorias = ["Digestión","Mental","Mujeres","Control de Peso","Glucosa","Urinario","Inmunológico","Energía","Desintoxicación","Niños","Antioxidantes","Circulación","Articulaciones"];
   mostrarMensajeBot("📋 Selecciona una categoría:", categorias.map(cat => ({
     texto: cat, accion: () => mostrarProductosPorCategoria(cat)
   })));
@@ -29,7 +29,7 @@ function mostrarProductosPorCategoria(categoria) {
   }
 
   filtrados.forEach(prod => {
-    const precioNum = parseFloat(prod.precio.toString().replace('$','').replace(',',''));
+    const precioNum = parseFloat(prod.precio.replace('$','').replace(',',''));
     const promoTexto = precioNum > 350 
       ? "🎉 Al registrarte obtienes un 30% de descuento en este producto." 
       : "";
@@ -52,11 +52,11 @@ ${promoTexto}
 
 function mostrarRecomendaciones() {
   mostrarMensajeBot("👥 ¿Para quién necesitas recomendaciones?", [
-    { texto: "Mujer", accion: () => mostrarProductosPorCategoria("digestiva") },
-    { texto: "Hombre", accion: () => mostrarProductosPorCategoria("energia") },
-    { texto: "Niños", accion: () => mostrarProductosPorCategoria("sistema-inmunologico") },
-    { texto: "Deportistas", accion: () => mostrarProductosPorCategoria("energia") },
-    { texto: "Adultos Mayores", accion: () => mostrarProductosPorCategoria("sistema-inmunologico") }
+    { texto: "Mujer", accion: () => mostrarProductosPorCategoria("Mujeres") },
+    { texto: "Hombre", accion: () => mostrarProductosPorCategoria("Energía") },
+    { texto: "Niños", accion: () => mostrarProductosPorCategoria("Niños") },
+    { texto: "Deportistas", accion: () => mostrarProductosPorCategoria("Energía") },
+    { texto: "Adultos Mayores", accion: () => mostrarProductosPorCategoria("Inmunológico") }
   ]);
 }
 
@@ -86,7 +86,7 @@ function analizarSintomas(texto) {
   if (t.includes("cansancio") || t.includes("fatiga")) {
     mostrarMensajeBot("🔋 Te recomiendo suplementos alimenticios de la categoría Energía.");
   } else if (t.includes("digest")) {
-    mostrarMensajeBot("🌿 Te recomiendo suplementos alimenticios de la categoría Digestiva.");
+    mostrarMensajeBot("🌿 Te recomiendo suplementos alimenticios de la categoría Digestión.");
   } else if (t.includes("estrés") || t.includes("ansiedad")) {
     mostrarMensajeBot("🧘 Te recomiendo suplementos alimenticios de la categoría Mental.");
   } else {
