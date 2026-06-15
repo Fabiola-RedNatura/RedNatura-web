@@ -3,14 +3,13 @@ function renderProductos(filtro = 'todos') {
   const grid = document.getElementById('productos-grid');
   grid.innerHTML = '';
 
-  // Filtrar productos según categoría
   const productosFiltrados = filtro === 'todos' ? productos : productos.filter(p => p.categoria === filtro);
 
   productosFiltrados.forEach(producto => {
     const card = document.createElement('div');
     card.className = 'producto-card';
 
-    // Usar id para las imágenes (más seguro)
+    // Usar id para las imágenes
     const nombreImagen = producto.id + ".png";
 
     card.innerHTML = `
@@ -33,7 +32,7 @@ function verDescripcion(productoId) {
 // Mostrar precio y activar flujo de compra
 function verPrecio(productoId) {
   const producto = productos.find(p => p.id === productoId);
-  productoSeleccionado = producto; // variable global usada en chatbot.js
+  productoSeleccionado = producto;
   alert(`💲 Precio de ${producto.nombre}: ${producto.precio}\n\n¿Quieres comprar este producto? Escribe "comprar" en el chat.`);
 }
 
@@ -64,7 +63,7 @@ function renderSucursales() {
   });
 }
 
-// Inicializar al cargar la página
+// Inicializar
 window.addEventListener('DOMContentLoaded', () => {
   renderProductos();
   renderSucursales();
