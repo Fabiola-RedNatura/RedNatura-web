@@ -7,19 +7,23 @@ function filtrarProductos(filtro, boton=null) {
   const grid = document.getElementById('productos-grid');
   grid.innerHTML = '';
 
-  // Filtrar productos según categoría
-  const productosFiltrados = filtro === 'todos' ? productos : productos.filter(p => p.categoria === filtro);
+  // Normalizar categorías (minúsculas) para que coincidan
+  const productosFiltrados = filtro === 'todos' 
+    ? productos 
+    : productos.filter(p => p.categoria.toLowerCase() === filtro.toLowerCase());
 
   // Renderizar cada producto
   productosFiltrados.forEach(producto => {
     const card = document.createElement('div');
     card.className = 'producto-card';
+
     card.innerHTML = `
       <h3>${producto.nombre}</h3>
-      <p>${producto.descripcion}</p>
+      <p>${producto.descripcionCorta || producto.descripcion}</p>
       <div class="precio">${producto.precio}</div>
       <button class="btn-producto" onclick="verDescripcion(${producto.id})">Ver más detalles</button>
     `;
+
     grid.appendChild(card);
   });
 }
@@ -51,6 +55,7 @@ window.addEventListener('DOMContentLoaded', () => {
   filtrarProductos('todos');
   renderSucursales();
 });
+
 
 
 
