@@ -10,7 +10,7 @@ document.getElementById("registro-form").addEventListener("submit", enviarRegist
 function mostrarMensaje(texto, tipo = "bot") {
   const chatWindow = document.getElementById("chat-window");
   const mensaje = document.createElement("div");
-  mensaje.className = tipo === "bot" ? "mensaje-bot" : "mensaje-user";
+  mensaje.className = tipo === "bot" ? "message bot" : "message user";
   mensaje.textContent = texto;
   chatWindow.appendChild(mensaje);
   chatWindow.scrollTop = chatWindow.scrollHeight;
