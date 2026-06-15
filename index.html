@@ -13,12 +13,30 @@
   </header>
 
   <main>
-    <!-- Sección de productos -->
-    <section id="productos">
-      <!-- Aquí se insertan dinámicamente las tarjetas desde productos.js -->
+    <!-- Sección de filtros -->
+    <nav id="filtros">
+      <button class="filtro-btn active" onclick="filtrarProductos('todos', this)">Todos</button>
+      <button class="filtro-btn" onclick="filtrarProductos('Niños', this)">Niños</button>
+      <button class="filtro-btn" onclick="filtrarProductos('Mujeres', this)">Mujeres</button>
+      <button class="filtro-btn" onclick="filtrarProductos('Hombres', this)">Hombres</button>
+      <button class="filtro-btn" onclick="filtrarProductos('Belleza', this)">Belleza</button>
+      <button class="filtro-btn" onclick="filtrarProductos('Digestión', this)">Digestión</button>
+      <button class="filtro-btn" onclick="filtrarProductos('Energía', this)">Energía</button>
+      <button class="filtro-btn" onclick="filtrarProductos('Inmunológico', this)">Inmunológico</button>
+      <button class="filtro-btn" onclick="filtrarProductos('Articulaciones', this)">Articulaciones</button>
+      <button class="filtro-btn" onclick="filtrarProductos('Antioxidantes', this)">Antioxidantes</button>
+    </nav>
+
+    <!-- Grid de productos -->
+    <section id="productos-grid" class="grid"></section>
+
+    <!-- Grid de sucursales -->
+    <section>
+      <h2>Sucursales</h2>
+      <div id="sucursales-grid" class="grid"></div>
     </section>
 
-    <!-- Sección del chatbot -->
+    <!-- Chatbot -->
     <section id="chatbot">
       <h2>Asistente RedNatura</h2>
       <div id="chat-window"></div>
@@ -28,7 +46,7 @@
       </div>
     </section>
 
-    <!-- Formulario de registro para compra -->
+    <!-- Formulario de registro -->
     <section id="registro" style="display:none;">
       <h2>Registro de compra</h2>
       <form id="registro-form">
@@ -55,6 +73,7 @@
 
   <!-- Scripts -->
   <script src="js/productos.js"></script>
+  <script src="js/sucursales.js"></script>
   <script src="js/app.js"></script>
   <script src="js/chatbot.js"></script>
 </body>
