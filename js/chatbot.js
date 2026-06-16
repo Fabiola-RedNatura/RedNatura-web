@@ -67,34 +67,30 @@ function pedirUbicacion() {
 
 function procesarUbicacion(ubicacion) {
   const estadoNormalizado = ubicacion.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  const sucursal = sucursales.find(s =>
+  const sucursalesEstado = sucursales.filter(s =>
     s.estado.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === estadoNormalizado
   );
 
-  if (sucursal) {
+  if (sucursalesEstado.length === 0) {
+    mostrarMensajeBot(`❌ No tenemos registrada una sucursal en "${ubicacion}". Intenta con otro estado donde RedNatura esté presente.`);
+  } else if (sucursalesEstado.length === 1) {
+    const sucursal = sucursalesEstado[0];
     mostrarMensajeBot(`✅ Tenemos sucursal en ${sucursal.ciudad}, ${sucursal.estado}.
 Horario: Lunes a Viernes 9:00 AM - 7:00 PM, Sábados 9:00 AM - 2:00 PM.
-Para obtener información más precisa, completa tu registro.`);
+Si deseas la ubicación exacta, realiza tu registro.`);
 
-    // Abrir modal de registro automáticamente
     abrirModalRegistro({ nombre: `Sucursal ${sucursal.ciudad}`, precio: "", id: 0 });
   } else {
-    mostrarMensajeBot(`❌ No tenemos registrada una sucursal en "${ubicacion}". Intenta con otro estado donde RedNatura esté presente.`);
+    mostrarMensajeBot(`📍 En ${ubicacion} tenemos varias sucursales. Selecciona una:`, sucursalesEstado.map(s => ({
+      texto: s.ciudad, accion: () => {
+        mostrarMensajeBot(`✅ Sucursal en ${s.ciudad}, ${s.estado}.
+Horario: Lunes a Viernes 9:00 AM - 7:00 PM, Sábados 9:00 AM - 2:00 PM.
+Si deseas la ubicación exacta, realiza tu registro.`);
+        abrirModalRegistro({ nombre: `Sucursal ${s.ciudad}`, precio: "", id: 0 });
+      }
+    })));
   }
   estado = 'esperando_opcion';
-}
-
-function analizarSintomas(texto) {
-  const t = texto.toLowerCase();
-  if (t.includes("cansancio") || t.includes("fatiga")) {
-    mostrarMensajeBot("🔋 Te recomiendo suplementos alimenticios de la categoría Energía.");
-  } else if (t.includes("digest")) {
-    mostrarMensajeBot("🌿 Te recomiendo suplementos alimenticios de la categoría Digestión.");
-  } else if (t.includes("estrés") || t.includes("ansiedad")) {
-    mostrarMensajeBot("🧘 Te recomiendo suplementos alimenticios de la categoría Mental.");
-  } else {
-    mostrarMensajeBot("ℹ️ Recuerda que todos nuestros productos son suplementos alimenticios.");
-  }
 }
 
 function mostrarMensajeBot(mensaje, opciones=[]) {
@@ -141,8 +137,6 @@ function sendMessage() {
 
   if (estado === 'esperando_estado') {
     procesarUbicacion(mensaje);
-  } else {
-    analizarSintomas(mensaje);
   }
 }
 
