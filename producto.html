@@ -2,142 +2,104 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detalle del Producto - RedNatura</title>
+  <title>Detalle del Producto</title>
   <link rel="stylesheet" href="css/styles.css">
-  <style>
-    .producto-detalle {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 30px;
-      margin: 40px auto;
-      max-width: 1100px;
-      padding: 0 20px;
-    }
-
-    .producto-img-left {
-      flex: 1 1 320px;
-    }
-
-    .producto-img-left img {
-      width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      background: white;
-      object-fit: contain;
-    }
-
-    .producto-info-right {
-      flex: 2 1 400px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .producto-info-right h1 {
-      margin-bottom: 15px;
-      font-size: 2rem;
-      color: #2c3e7f;
-    }
-
-    .producto-info-right p,
-    .producto-info-right li {
-      margin-bottom: 8px;
-      line-height: 1.5;
-    }
-
-    .btn-comprar {
-      background-color: #28a745;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 20px;
-      font-size: 1rem;
-      font-weight: bold;
-    }
-
-    .btn-comprar:hover {
-      background-color: #218838;
-    }
-  </style>
 </head>
 <body>
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="container">
-      <a href="index.html" style="color:white; text-decoration:none; font-weight:bold;">⬅ Volver al catálogo</a>
+      <div class="logo">
+        <h1>RedNatura</h1>
+        <p>Suplementos alimenticios naturales</p>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html#productos">Productos</a></li>
+        <li><a href="index.html#sucursales">Sucursales</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
     </div>
   </nav>
 
-  <div class="producto-detalle">
-    <div class="producto-img-left">
-      <img id="imagen" alt="Imagen del producto">
+  <!-- Contenido del producto -->
+  <section class="productos">
+    <div class="container">
+      <div id="producto-detalle" class="modal-content producto-detail"></div>
     </div>
+  </section>
 
-    <div class="producto-info-right">
-      <h1 id="nombre"></h1>
-      <p id="descripcion"></p>
-      <p><strong>Presentación:</strong> <span id="presentacion"></span></p>
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 RedNatura - Todos los derechos reservados</p>
+  </footer>
 
-      <h3>Ingredientes</h3>
-      <ul id="ingredientes"></ul>
+  <!-- Scripts -->
+  <script src="js/productos.js"></script>
+  <script>
+    // Obtener el ID desde la URL
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get("id"));
+    const prod = productos.find(p => p.id === id);
 
-      <h3>Beneficios</h3>
-      <ul id="beneficios"></ul>
+    const detalleDiv = document.getElementById("producto-detalle");
 
-      <h3>Modo de uso</h3>
-      <p id="uso"></p>
+    if (prod) {
+      const imagenSrc = prod.imagen || ("img/" + prod.nombre.toLowerCase().replace(/[^a-z0-9]+/gi,"-") + ".jpg");
 
-      <p><strong>Precio:</strong> <span id="precio"></span></p>
-      <p id="promocion"></p>
+      detalleDiv.innerHTML = `
+        <h2>${prod.nombre}</h2>
+        <img src="${imagenSrc}" alt="${prod.nombre}" class="producto-imagen">
+        <p><strong>Presentación:</strong> ${prod.presentacion}</p>
+        <p>${prod.descripcionLarga || prod.descripcion}</p>
 
-      <button class="btn-comprar" id="btn-comprar">Comprar por WhatsApp</button>
+        <h3>Ingredientes</h3>
+        <ul>${prod.ingredientes.map(i => `<li>${i}</li>`).join("")}</ul>
+
+        <h3>Beneficios</h3>
+        <ul>${prod.beneficios.map(b => `<li>${b}</li>`).join("")}</ul>
+
+        <h3>Modo de uso</h3>
+        <p>${prod.modoUso}</p>
+
+        <p class="precio"><strong>Precio:</strong> ${prod.precio}</p>
+        <button class="btn-producto" onclick="abrirRegistro()">Comprar</button>
+      `;
+    } else {
+      detalleDiv.innerHTML = "<p>Producto no encontrado.</p>";
+    }
+
+    function abrirRegistro() {
+      const modal = document.getElementById('registro-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('show');
+    }
+  </script>
+
+  <!-- Modal de registro -->
+  <div id="registro-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-modal" onclick="cerrarRegistro()">×</span>
+      <h2>Registro de compra</h2>
+      <form id="registro-form">
+        <input type="text" id="nombre" placeholder="Nombre" required>
+        <input type="text" id="apellido-paterno" placeholder="Apellido paterno" required>
+        <input type="text" id="apellido-materno" placeholder="Apellido materno" required>
+        <input type="tel" id="celular" placeholder="Teléfono" required>
+        <input type="text" id="nacimiento" placeholder="Lugar de nacimiento" required>
+        <input type="date" id="fecha-nacimiento" required>
+        <button type="submit" class="btn-submit">Enviar registro</button>
+      </form>
     </div>
   </div>
 
-  <script src="js/productos.js"></script>
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const id = parseInt(params.get('id'));
-    const producto = productos.find(p => p.id === id);
-
-    if (producto) {
-      document.getElementById('nombre').textContent = producto.nombre;
-      document.getElementById('imagen').src = producto.imagen;
-      document.getElementById('imagen').alt = producto.nombre;
-      document.getElementById('descripcion').textContent = producto.descripcionLarga || producto.descripcion;
-      document.getElementById('presentacion').textContent = producto.presentacion;
-      document.getElementById('uso').textContent = producto.modoUso;
-      document.getElementById('precio').textContent = producto.precio;
-
-      producto.ingredientes.forEach(i => {
-        const li = document.createElement('li');
-        li.textContent = i;
-        document.getElementById('ingredientes').appendChild(li);
-      });
-
-      producto.beneficios.forEach(b => {
-        const li = document.createElement('li');
-        li.textContent = b;
-        document.getElementById('beneficios').appendChild(li);
-      });
-
-      const precioNum = parseFloat(producto.precio.replace('$', '').replace(/,/g, ''));
-      if (!isNaN(precioNum) && precioNum > 350) {
-        document.getElementById('promocion').textContent =
-          "🎉 Promoción: 30% de descuento al registrarte como cliente preferente.";
-      }
-
-      document.getElementById('btn-comprar').addEventListener('click', () => {
-        const numero = "525555070734";
-        const mensaje = encodeURIComponent(
-          `Hola, me interesa comprar el producto ${producto.nombre}. ¿Me puedes dar más información?`
-        );
-        window.open(`[wa.me](https://wa.me/${numero}?text=${mensaje})`, '_blank');
-      });
-    } else {
-      document.body.innerHTML = "<h2 style='text-align:center; margin-top:40px;'>Producto no encontrado</h2>";
+    function cerrarRegistro() {
+      const modal = document.getElementById('registro-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('show');
     }
   </script>
 </body>
 </html>
+
+
