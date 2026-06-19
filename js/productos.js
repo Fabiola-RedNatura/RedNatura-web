@@ -540,7 +540,7 @@ const productos = [
 {
   id: 31,
   nombre: "SENZADOL Crema",
-  precio: "$---",
+  precio: "$433",
   presentacion: "Tubo con crema tópica",
   categoria: "Articulaciones",
   ingredientes: ["Romero","Salicilato de metilo","MSM"],
@@ -556,7 +556,7 @@ const productos = [
 {
   id: 32,
   nombre: "UC-II NF",
-  precio: "$---",
+  precio: "$994.50",
   presentacion: "Frasco con cápsulas",
   categoria: "Articulaciones",
   ingredientes: ["Colágeno tipo II no desnaturalizado","Vitamina C"],
@@ -572,7 +572,7 @@ const productos = [
 {
   id: 33,
   nombre: "FEMICOL",
-  precio: "$---",
+  precio: "$313",
   presentacion: "Frasco con cápsulas",
   categoria: "Belleza",
   ingredientes: ["Colágeno hidrolizado","Vitamina C","Biotina"],
@@ -588,7 +588,7 @@ const productos = [
 {
   id: 34,
   nombre: "DUGRAN-X",
-  precio: "$---",
+  precio: "$523",
   presentacion: "Frasco con cápsulas",
   categoria: "Hombres",
   ingredientes: ["Extractos naturales energizantes","Vitaminas","Minerales"],
@@ -603,8 +603,8 @@ const productos = [
 },
   {
   id: 35,
-  nombre: "EPAX NF",
-  precio: "$---",
+  nombre: "OMEPAX NF",
+  precio: "$720",
   presentacion: "Frasco con cápsulas",
   categoria: "Inmunológico",
   ingredientes: ["Aceite de pescado (EPA y DHA)","Vitamina E"],
@@ -620,7 +620,7 @@ const productos = [
 {
   id: 36,
   nombre: "BLEX",
-  precio: "$---",
+  precio: "$565",
   presentacion: "Frasco con cápsulas",
   categoria: "Inmunológico",
   ingredientes: ["Extractos naturales","Vitaminas","Minerales"],
@@ -636,7 +636,7 @@ const productos = [
 {
   id: 37,
   nombre: "PLENNA",
-  precio: "$---",
+  precio: "$651",
   presentacion: "Frasco con cápsulas",
   categoria: "Mujeres",
   ingredientes: ["Extractos naturales","Vitaminas","Minerales"],
@@ -650,25 +650,9 @@ const productos = [
   descripcionLarga: "PLENNA es un suplemento diseñado para mujeres que buscan equilibrio hormonal y bienestar integral. Con extractos naturales, vitaminas y minerales, fortalece defensas y aporta energía para acompañar tu día."
 },
 {
-  id: 38,
-  nombre: "OMEPAX",
-  precio: "$---",
-  presentacion: "Frasco con cápsulas",
-  categoria: "Digestión",
-  ingredientes: ["Extractos naturales digestivos","Vitaminas"],
-  beneficios: [
-    "Favorece salud digestiva","Apoya equilibrio intestinal",
-    "Reduce molestias estomacales","Favorece absorción de nutrientes","Protección antioxidante"
-  ],
-  modoUso: "Tomar 1 cápsula al día",
-  descripcion: "Suplemento para salud digestiva y bienestar intestinal.",
-  descripcionCorta: "🌿 Digestión equilibrada y confortable.",
-  descripcionLarga: "OMEPAX es un suplemento que favorece la salud digestiva y el equilibrio intestinal. Con extractos naturales y vitaminas, ayuda a reducir molestias estomacales y favorece la absorción de nutrientes para tu bienestar diario."
-},
-{
   id: 39,
   nombre: "FLUSSORIN",
-  precio: "$---",
+  precio: "$808",
   presentacion: "Frasco con cápsulas",
   categoria: "Hombres",
   ingredientes: ["Extractos naturales energizantes","Vitaminas","Minerales"],
@@ -682,25 +666,9 @@ const productos = [
   descripcionLarga: "FLUSSORIN es un suplemento diseñado para hombres que buscan energía, rendimiento físico y equilibrio hormonal. Con extractos naturales, vitaminas y minerales, fortalece defensas y apoya la vitalidad diaria."
 },
 {
-  id: 40,
-  nombre: "RENAISS en polvo",
-  precio: "$---",
-  presentacion: "Bote con polvo",
-  categoria: "Belleza",
-  ingredientes: ["Colágeno hidrolizado","Ácido hialurónico","Biotina","Vitaminas"],
-  beneficios: [
-    "Favorece elasticidad de la piel","Fortalece cabello y uñas",
-    "Apoya salud articular","Protección antioxidante","Favorece regeneración celular"
-  ],
-  modoUso: "Mezclar una medida en agua o bebida",
-  descripcion: "Suplemento en polvo con colágeno y biotina.",
-  descripcionCorta: "✨ Belleza y salud desde dentro.",
-  descripcionLarga: "RENAISS en polvo combina colágeno hidrolizado, ácido hialurónico y biotina para favorecer la elasticidad de la piel, fortalecer cabello y uñas y apoyar la salud articular. Una fórmula completa para cuidar tu belleza desde dentro."
-},
-{
   id: 41,
   nombre: "RENAISS Crema",
-  precio: "$---",
+  precio: "$661",
   presentacion: "Envase con crema tópica",
   categoria: "Belleza",
   ingredientes: ["Colágeno hidrolizado","Ácido hialurónico","Biotina","Vitaminas","Extractos naturales"],
