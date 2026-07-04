@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contacto — RedNatura</title>
+
+  <!-- Estilos mínimos independientes para que funcione sin tocar CSS global -->
+  <style>
+    :root{
+      --accent:#2a9d8f;
+      --accent-dark:#1e7a66;
+      --bg:#f7faf9;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --radius:12px;
+      --shadow: 0 6px 18px rgba(16,24,40,0.08);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    body{ margin:0; background:linear-gradient(180deg,#f0f6f5 0%, #fbfffe 100%); color:#0f172a; -webkit-font-smoothing:antialiased; padding:24px; box-sizing:border-box;}
+    .contact-section{ max-width:920px; margin:28px auto; background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:28px; }
+    h2{ margin:0 0 12px 0; color:var(--accent-dark); }
+    p.lead{ color:var(--muted); margin-top:0; }
+
+    form#contact-form{ display:grid; gap:12px; grid-template-columns: 1fr 1fr; }
+    form#contact-form .full { grid-column: 1 / -1; }
+    input, textarea{
+      width:100%; padding:12px 14px; border-radius:10px; border:1px solid #e6eef0; background:#fbffff; font-size:15px; box-sizing:border-box;
+      outline: none;
+    }
+    textarea{ min-height:140px; resize:vertical; }
+    .btn-send{
+      background: linear-gradient(180deg,var(--accent),var(--accent-dark)); color:white; border:none; padding:12px 16px; border-radius:10px;
+      cursor:pointer; font-weight:600; font-size:15px;
+    }
+    .btn-send:active{ transform:translateY(1px); }
+    .contact-meta{ display:flex; gap:12px; align-items:center; color:var(--muted); font-size:14px; margin-top:8px; }
+
+    .flash { margin-top:12px; padding:10px 12px; border-radius:8px; display:none; }
+    .flash.success{ background:#ecfdf5; color:#064e3b; border:1px solid #bbf7d0; display:block; }
+    .flash.error{ background:#fff1f2; color:#9f1239; border:1px solid #fecaca; display:block; }
+
+    /* Responsive */
+    @media (max-width:720px){
+      form#contact-form{ grid-template-columns: 1fr; }
+      .contact-section{ padding:18px; margin:18px; }
+    }
+
+    /* Pequeños estilos para enlaces dentro del flash */
+    .flash a{ color:var(--accent); text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <main class="contact-section" role="main" aria-labelledby="contact-title">
+    <header>
+      <h2 id="contact-title">Contacto</h2>
+      <p class="lead">¿Tienes dudas o deseas realizar un pedido? Escríbenos y te responderemos pronto.</p>
+    </header>
+
+    <!-- Usamos Formsubmit.co para enviar el formulario directamente al correo fabiola250204@gmail.com -->
+    <form id="contact-form" method="POST" action="https://formsubmit.co/fabiola250204@gmail.com" aria-label="Formulario de contacto">
+      <!-- Campos -->
+      <input type="text" name="nombre" id="nombre" placeholder="Nombre completo" required autocomplete="name">
+      <input type="email" name="correo" id="correo" placeholder="Correo electrónico" required autocomplete="email">
+
+      <input class="full" type="tel" name="telefono" id="telefono" placeholder="Teléfono (opcional)" inputmode="tel" autocomplete="tel">
+      <input class="full" type="text" name="asunto" id="asunto" placeholder="Asunto (ej. Consulta sobre PROBI GO!)" required>
+
+      <textarea class="full" name="mensaje" id="mensaje" placeholder="Escribe tu mensaje..." required></textarea>
+
+      <div class="full" style="display:flex; gap:10px; align-items:center; justify-content:space-between;">
+        <div style="display:flex; gap:8px; align-items:center;">
+          <input type="checkbox" id="consent" name="consent" required>
+          <label for="consent" style="font-size:13px; color:var(--muted)">Acepto que mis datos sean usados para contactarme.</label>
+        </div>
+
+        <button type="submit" class="btn-send" aria-label="Enviar mensaje">Enviar mensaje</button>
+      </div>
+
+      <!-- Inputs especiales para Formsubmit: desactivar captcha y redirigir a la misma página con success -->
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_subject" value="Nuevo mensaje desde web RedNatura">
+      <input type="hidden" name="_next" value="/contacto.html?success=1">
+
+      <div id="flash-messages" class="full"></div>
+    </form>
+
+    <div class="contact-meta" aria-hidden="false" style="margin-top:16px;">
+      <div>📞 <strong>Tel:</strong> <a href="tel:+52-5555070734">5555070734</a></div>
+      <div>✉️ <strong>Email:</strong> <a href="mailto:fabiola250204@gmail.com">fabiola250204@gmail.com</a></div>
+    </div>
+  </main>
+
+  <script>
+    // Muestra mensaje flash si la URL contiene ?success=1
+    const flash = document.getElementById('flash-messages');
+    function showFlashHtml(html, type='success'){
+      flash.innerHTML = `<div class="flash ${type}">${html}</div>`;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === '1'){
+      showFlashHtml('¡Mensaje enviado! Gracias, te contactaremos pronto.', 'success');
+      // limpiar parámetros de URL para que no se muestre otra vez si recarga
+      if (history.replaceState) {
+        const url = new URL(window.location);
+        url.searchParams.delete('success');
+        history.replaceState({}, document.title, url.pathname + url.search);
+      }
+    }
+
+    // Por si el usuario no desea usar Formsubmit, dejamos un fallback al enviar por mailto y WhatsApp
+    // (esto no se ejecuta si Formsubmit hace la redirección de éxito)
+    document.getElementById('contact-form').addEventListener('submit', function(e){
+      // No interferimos con envío normal - Formsubmit gestionará todo.
+      // Solo validamos el checkbox para dar feedback inmediato.
+      const consent = document.getElementById('consent');
+      if (!consent.checked){
+        e.preventDefault();
+        showFlashHtml('Debes aceptar el uso de tus datos para continuar.', 'error');
+      }
+    });
+  </script>
+
+  <!-- Nota para usuarios sin JS: el formulario funciona vía Formsubmit -->
+  <noscript>
+    <div style="max-width:920px;margin:20px auto;padding:12px;background:#fff9e6;border-radius:8px;border:1px solid #f5e1a4;">
+      Para enviar el formulario, asegúrate de que JavaScript esté habilitado o utiliza el correo: <a href="mailto:fabiola250204@gmail.com">fabiola250204@gmail.com</a>
+    </div>
+  </noscript>
+</body>
+</html>
