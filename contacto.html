@@ -25,7 +25,7 @@
 
     form#contact-form{ display:grid; gap:12px; grid-template-columns: 1fr 1fr; }
     form#contact-form .full { grid-column: 1 / -1; }
-    input, textarea{
+    input, textarea, select{
       width:100%; padding:12px 14px; border-radius:10px; border:1px solid #e6eef0; background:#fbffff; font-size:15px; box-sizing:border-box;
       outline: none;
     }
@@ -49,6 +49,9 @@
 
     /* Pequeños estilos para enlaces dentro del flash */
     .flash a{ color:var(--accent); text-decoration:underline; }
+
+    /* resaltado del producto preseleccionado */
+    .prefill-box{ background:#f8fffb; border:1px solid #ddf6ee; padding:10px 12px; border-radius:8px; color:#065f46; font-weight:700; }
   </style>
 </head>
 <body>
@@ -56,7 +59,7 @@
   <main class="contact-section" role="main" aria-labelledby="contact-title">
     <header>
       <h2 id="contact-title">Contacto</h2>
-      <p class="lead">¿Tienes dudas o deseas realizar un pedido? Escríbenos y te responderemos pronto.</p>
+      <p class="lead">¿Tienes dudas o deseas realizar un pedido? Completa el formulario y nos pondremos en contacto.</p>
     </header>
 
     <!-- Usamos Formsubmit.co para enviar el formulario directamente al correo fabiola250204@gmail.com -->
@@ -65,10 +68,17 @@
       <input type="text" name="nombre" id="nombre" placeholder="Nombre completo" required autocomplete="name">
       <input type="email" name="correo" id="correo" placeholder="Correo electrónico" required autocomplete="email">
 
-      <input class="full" type="tel" name="telefono" id="telefono" placeholder="Teléfono (opcional)" inputmode="tel" autocomplete="tel">
+      <input class="full" type="tel" name="telefono" id="telefono" placeholder="Teléfono" inputmode="tel" autocomplete="tel" required>
+      <input class="full" type="text" name="lugar_nacimiento" id="lugar_nacimiento" placeholder="Lugar de nacimiento" required>
+
+      <input class="full" type="date" name="fecha_nacimiento" id="fecha_nacimiento" placeholder="Fecha de nacimiento" required>
+
       <input class="full" type="text" name="asunto" id="asunto" placeholder="Asunto (ej. Consulta sobre PROBI GO!)" required>
 
       <textarea class="full" name="mensaje" id="mensaje" placeholder="Escribe tu mensaje..." required></textarea>
+
+      <!-- campo oculto para producto preseleccionado -->
+      <input type="hidden" name="producto" id="producto-hidden" value="">
 
       <div class="full" style="display:flex; gap:10px; align-items:center; justify-content:space-between;">
         <div style="display:flex; gap:8px; align-items:center;">
@@ -86,6 +96,8 @@
 
       <div id="flash-messages" class="full"></div>
     </form>
+
+    <div id="prefill-display" style="margin-top:14px"></div>
 
     <div class="contact-meta" aria-hidden="false" style="margin-top:16px;">
       <div>📞 <strong>Tel:</strong> <a href="tel:+52-5555070734">5555070734</a></div>
@@ -111,20 +123,39 @@
       }
     }
 
-    // Por si el usuario no desea usar Formsubmit, dejamos un fallback al enviar por mailto y WhatsApp
-    // (esto no se ejecuta si Formsubmit hace la redirección de éxito)
+    // Prefill desde query params cuando venimos desde producto
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const producto = params.get('producto');
+      const precio = params.get('precio');
+
+      if (producto) {
+        const prefill = document.getElementById('producto-hidden');
+        if (prefill) prefill.value = producto;
+
+        const caja = document.getElementById('prefill-display');
+        caja.innerHTML = `<div class="prefill-box">Interesado en: ${producto}${precio? ' — ' + precio : ''}</div>`;
+      }
+
+      // si queremos pre‑llenar asunto y mensaje
+      const asuntoInput = document.getElementById('asunto');
+      const mensajeTextarea = document.getElementById('mensaje');
+      if (producto && asuntoInput) asuntoInput.value = `Consulta / Pedido: ${producto}`;
+      if (producto && mensajeTextarea) mensajeTextarea.value = `Hola, estoy interesada/o en el producto: ${producto}\nPrecio: ${params.get('precio') || ''}\nPor favor contáctenme.`;
+    });
+
+    // Validación simple antes de enviar
     document.getElementById('contact-form').addEventListener('submit', function(e){
-      // No interferimos con envío normal - Formsubmit gestionará todo.
-      // Solo validamos el checkbox para dar feedback inmediato.
       const consent = document.getElementById('consent');
       if (!consent.checked){
         e.preventDefault();
         showFlashHtml('Debes aceptar el uso de tus datos para continuar.', 'error');
+        return;
       }
+      // Dejar que el formulario haga POST hacia Formsubmit
     });
   </script>
 
-  <!-- Nota para usuarios sin JS: el formulario funciona vía Formsubmit -->
   <noscript>
     <div style="max-width:920px;margin:20px auto;padding:12px;background:#fff9e6;border-radius:8px;border:1px solid #f5e1a4;">
       Para enviar el formulario, asegúrate de que JavaScript esté habilitado o utiliza el correo: <a href="mailto:fabiola250204@gmail.com">fabiola250204@gmail.com</a>
