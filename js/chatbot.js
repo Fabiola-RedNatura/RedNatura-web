@@ -1,126 +1,208 @@
-let estado = 'inicial';
+// Respuestas del chatbot
+const respuestasBot = {
+  bienvenida: "¡Hola! Soy el Asistente IA de RedNatura 🤖. Estoy aquí para ayudarte a encontrar el suplemento perfecto. ¿Qué necesitas?"
+};
 
-function toggleChat() {
-  const chatbot = document.getElementById('chatbot');
-  chatbot.classList.toggle('hidden');
+let chatMessages = [];
+const WA_NUMBER = '5555070734';
 
-  if (!chatbot.classList.contains('hidden') && estado === 'inicial') {
-    mostrarMensajeBot("¡Hola! 👋 Bienvenido a RedNatura. Soy tu asistente IA.", [
-      { texto: "Catálogo", accion: () => mostrarCategorias() },
-      { texto: "Ubicar sucursal", accion: () => pedirUbicacion() },
-      { texto: "Recomendaciones", accion: () => mostrarRecomendaciones() }
-    ]);
-    estado = 'esperando_opcion';
-  }
+// Función para enviar mensaje
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const mensaje = input.value.trim();
+  if (!mensaje) return;
+
+  addMessage(mensaje, 'user');
+  input.value = '';
+
+  setTimeout(() => {
+    const respuesta = obtenerRespuesta(mensaje);
+    addMessage(respuesta, 'bot');
+  }, 300);
 }
 
-function mostrarCategorias() {
-  const categorias = ["Digestión","Mental","Mujeres","Control de Peso","Glucosa","Urinario","Inmunológico","Energía","Desintoxicación","Niños","Antioxidantes","Circulación","Articulaciones"];
-  mostrarMensajeBot("📋 Selecciona una categoría:", categorias.map(cat => ({
-    texto: cat, accion: () => mostrarProductosPorCategoria(cat)
-  })));
-}
-
-function mostrarProductosPorCategoria(categoria) {
-  const filtrados = productos.filter(p => p.categoria.toLowerCase() === categoria.toLowerCase());
-  if (filtrados.length === 0) {
-    mostrarMensajeBot("No encontré productos en esa categoría.");
-    return;
-  }
-
-  filtrados.forEach(prod => {
-    const precioNum = parseFloat(prod.precio.replace('$','').replace(',',''));
-    const promoTexto = precioNum > 350 
-      ? "🎉 Al registrarte obtienes un 30% de descuento en este producto." 
-      : "";
-
-    mostrarMensajeBot(`${prod.nombre}`, [
-      { texto: "Ver precio", accion: () => mostrarMensajeBot(
-        `💰 Precio de ${prod.nombre}: ${prod.precio}
-${promoTexto}
-¿Quieres registrarte para comprarlo ahora?`,
-        [
-          { texto: "Sí, registrarme", accion: () => abrirModalRegistro(prod) },
-          { texto: "No, gracias", accion: () => mostrarMensajeBot("De acuerdo 👍, puedes seguir explorando productos.") }
-        ]
-      ) },
-      { texto: "Ver descripción", accion: () => verDescripcion(prod.id) },
-      { texto: "Registrarme", accion: () => abrirModalRegistro(prod) }
-    ]);
-  });
-}
-
-function mostrarRecomendaciones() {
-  mostrarMensajeBot("👥 ¿Para quién necesitas recomendaciones?", [
-    { texto: "Mujer", accion: () => mostrarProductosPorCategoria("Mujeres") },
-    { texto: "Hombre", accion: () => mostrarProductosPorCategoria("Energía") },
-    { texto: "Niños", accion: () => mostrarProductosPorCategoria("Niños") },
-    { texto: "Deportistas", accion: () => mostrarProductosPorCategoria("Energía") },
-    { texto: "Adultos Mayores", accion: () => mostrarProductosPorCategoria("Inmunológico") }
-  ]);
-}
-
-function pedirUbicacion() {
-  mostrarMensajeBot("📍 Dinos de qué estado nos contactas para mostrarte la sucursal más cercana.");
-  estado = 'esperando_estado';
-}
-
-function procesarUbicacion(ubicacion) {
-  const estadoNormalizado = ubicacion.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  const sucursalesEstado = sucursales.filter(s =>
-    s.estado.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === estadoNormalizado
+function obtenerRespuesta(texto) {
+  const lower = texto.toLowerCase();
+  
+  // Buscar producto específico
+  const productoEncontrado = productos.find(p => 
+    lower.includes(p.nombre.toLowerCase()) ||
+    lower.includes(p.descripcionCorta.toLowerCase())
   );
-
-  if (sucursalesEstado.length === 0) {
-    mostrarMensajeBot(`❌ No tenemos registrada una sucursal en "${ubicacion}". Intenta con otro estado donde RedNatura esté presente.`);
-  } else if (sucursalesEstado.length === 1) {
-    const sucursal = sucursalesEstado[0];
-    mostrarMensajeBot(`✅ Tenemos sucursal en ${sucursal.ciudad}, ${sucursal.estado}.
-Horario: Lunes a Viernes 9:00 AM - 7:00 PM, Sábados 9:00 AM - 2:00 PM.
-Si deseas la ubicación exacta, realiza tu registro.`);
-
-    abrirModalRegistro({ nombre: `Sucursal ${sucursal.ciudad}`, precio: "", id: 0 });
-  } else {
-    mostrarMensajeBot(`📍 En ${ubicacion} tenemos varias sucursales. Selecciona una:`, sucursalesEstado.map(s => ({
-      texto: s.ciudad, accion: () => {
-        mostrarMensajeBot(`✅ Sucursal en ${s.ciudad}, ${s.estado}.
-Horario: Lunes a Viernes 9:00 AM - 7:00 PM, Sábados 9:00 AM - 2:00 PM.
-Si deseas la ubicación exacta, realiza tu registro.`);
-        abrirModalRegistro({ nombre: `Sucursal ${s.ciudad}`, precio: "", id: 0 });
-      }
-    })));
+  
+  if (productoEncontrado) {
+    return `Encontré **${productoEncontrado.nombre}** - $${productoEncontrado.precio.toLocaleString('es-MX')}\n${productoEncontrado.descripcionCorta}\n\n¿Quieres ver más detalles?`;
   }
-  estado = 'esperando_opcion';
+  
+  // Palabras clave
+  if (lower.includes('ayuda') || lower.includes('soporte')) {
+    return "¿En qué puedo ayudarte?\n- 🔍 Busca productos por categoría\n- 🏪 Encuentra sucursales cercanas\n- 💳 Consulta precios y promociones";
+  }
+  
+  if (lower.includes('promoción') || lower.includes('descuento') || lower.includes('oferta')) {
+    return "🎁 Tenemos DESCUENTO 30% en productos mayores a $350 al inscribirse. ¡Oferta por tiempo limitado!";
+  }
+  
+  return "¿Quieres buscar un producto, encontrar una sucursal o conocer nuestras ofertas?";
 }
 
-function mostrarMensajeBot(mensaje, opciones=[]) {
+// Función para agregar mensaje
+function addMessage(texto, tipo) {
   const messagesDiv = document.getElementById('chat-messages');
-  const messageDiv = document.createElement('div');
-  messageDiv.className = 'message bot';
-  messageDiv.textContent = mensaje;
-
-  if (opciones.length > 0) {
-    const buttonsDiv = document.createElement('div');
-    buttonsDiv.className = 'options';
-    opciones.forEach(opcion => {
-      const btn = document.createElement('button');
-      btn.textContent = opcion.texto;
-      btn.onclick = opcion.accion;
-      buttonsDiv.appendChild(btn);
-    });
-    messageDiv.appendChild(buttonsDiv);
-  }
-
-  messagesDiv.appendChild(messageDiv);
+  const messageEl = document.createElement('div');
+  messageEl.className = `message ${tipo}`;
+  
+  let contenido = texto
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
+  
+  messageEl.innerHTML = contenido;
+  messagesDiv.appendChild(messageEl);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
-function mostrarMensajeUsuario(mensaje) {
+// Función para alternar chat
+function toggleChat() {
+  const chatbot = document.getElementById('chatbot');
+  
+  if (chatbot.classList.contains('hidden')) {
+    chatbot.classList.remove('hidden');
+    chatbot.classList.add('show');
+    
+    if (chatMessages.length === 0) {
+      setTimeout(() => {
+        addMessage(respuestasBot.bienvenida, 'bot');
+        mostrarMenuPrincipal();
+        chatMessages.push('bienvenida');
+      }, 200);
+    }
+  } else {
+    chatbot.classList.add('hidden');
+    chatbot.classList.remove('show');
+  }
+}
+
+function mostrarMenuPrincipal() {
   const messagesDiv = document.getElementById('chat-messages');
-  const messageDiv = document.createElement('div');
-  messageDiv.className = 'message user';
-  messageDiv.textContent = mensaje;
-  messagesDiv.appendChild(messageDiv);
+  const menuEl = document.createElement('div');
+  menuEl.className = 'chat-menu';
+  menuEl.innerHTML = `
+    <button class="menu-btn" onclick="mostrarCategorias()">🔍 Productos</button>
+    <button class="menu-btn" onclick="mostrarFormularioEstado()">🏪 Sucursales</button>
+    <button class="menu-btn" onclick="mostrarContacto()">💬 Contacto</button>
+    <button class="menu-btn" onclick="mostrarOfertas()">🎁 Ofertas</button>
+  `;
+  messagesDiv.appendChild(menuEl);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function mostrarCategorias() {
+  addMessage('¿Qué tipo de producto buscas?', 'bot');
+  const messagesDiv = document.getElementById('chat-messages');
+  const categoriasEl = document.createElement('div');
+  categoriasEl.className = 'chat-menu';
+  const categorias = ['Digestión', 'Mental', 'Mujeres', 'Hombres', 'Niños', 'Belleza', 'Inmunológico', 'Energía', 'Glucosa', 'Circulación', 'Articulaciones', 'Desintoxicación', 'Control de Peso', 'Urinario', 'Antioxidantes'];
+  categoriasEl.innerHTML = categorias.map(cat => `<button class="menu-btn" onclick="buscarCategoria('${cat}')">${cat}</button>`).join('');
+  messagesDiv.appendChild(categoriasEl);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function buscarCategoria(categoria) {
+  const productosCat = productos.filter(p => p.categoria === categoria);
+  const total = productosCat.length;
+  
+  if (total > 0) {
+    addMessage(`Encontré ${total} producto(s) en ${categoria}:`, 'bot');
+    
+    const messagesDiv = document.getElementById('chat-messages');
+    const productosEl = document.createElement('div');
+    productosEl.className = 'chat-menu';
+    productosEl.innerHTML = productosCat.map(p => `<button class="menu-btn" onclick="mostrarProductoChat(${p.id})">${p.nombre}</button>`).join('');
+    messagesDiv.appendChild(productosEl);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  } else {
+    addMessage(`No encontré productos en ${categoria}.`, 'bot');
+  }
+}
+
+function mostrarProductoChat(productoId) {
+  const prod = productos.find(p => p.id === productoId);
+  if (prod) {
+    const precioDesc = prod.precio > 350 ? Math.round(prod.precio * 0.7) : null;
+    let msg = `**${prod.nombre}**\n$${prod.precio.toLocaleString('es-MX')}`;
+    if (precioDesc) {
+      msg += `\n💚 Con 30% DESC: $${precioDesc.toLocaleString('es-MX')}`;
+    }
+    msg += `\n${prod.descripcionCorta}`;
+    addMessage(msg, 'bot');
+    
+    const messagesDiv = document.getElementById('chat-messages');
+    const botonesEl = document.createElement('div');
+    botonesEl.className = 'chat-menu';
+    botonesEl.innerHTML = `
+      <button class="menu-btn" onclick="irAlDetalle(${prod.id})">📄 Ver Detalles</button>
+      <a href="https://wa.me/${WA_NUMBER}?text=Estoy%20interesado%20en%20${encodeURIComponent(prod.nombre)}" target="_blank" class="menu-btn">💬 WhatsApp</a>
+    `;
+    messagesDiv.appendChild(botonesEl);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+}
+
+function mostrarFormularioEstado() {
+  addMessage('¿De cuál estado me llamas?', 'bot');
+  const messagesDiv = document.getElementById('chat-messages');
+  const estadosEl = document.createElement('div');
+  estadosEl.className = 'chat-menu';
+  estadosEl.innerHTML = estados.map(est => `<button class="menu-btn" onclick="seleccionarEstado('${est}')">${est}</button>`).join('');
+  messagesDiv.appendChild(estadosEl);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function seleccionarEstado(estado) {
+  const suc = encontrarSucursalesPorEstado(estado);
+  addMessage(`Tenemos ${suc.length} sucursal(es) en ${estado}:`, 'bot');
+  
+  const messagesDiv = document.getElementById('chat-messages');
+  const sucEl = document.createElement('div');
+  sucEl.className = 'chat-menu';
+  sucEl.innerHTML = suc.map(s => `<button class="menu-btn" onclick="seleccionarSucursal('${s.nombre}')">${s.nombre}</button>`).join('');
+  messagesDiv.appendChild(sucEl);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function seleccionarSucursal(nombre) {
+  addMessage(`📍 **${nombre}**\n\n¿Qué te gustaría hacer?`, 'bot');
+  
+  const messagesDiv = document.getElementById('chat-messages');
+  const botonesEl = document.createElement('div');
+  botonesEl.className = 'chat-menu';
+  botonesEl.innerHTML = `
+    <a href="https://wa.me/${WA_NUMBER}?text=Estoy%20interesado%20en%20la%20sucursal%20de%20${encodeURIComponent(nombre)}" target="_blank" class="menu-btn">💬 WhatsApp</a>
+  `;
+  messagesDiv.appendChild(botonesEl);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function mostrarContacto() {
+  addMessage(`📞 **Contáctanos:**\n💬 WhatsApp: ${WA_NUMBER}\n📧 Email: fabiola250204@gmail.com`, 'bot');
+  const messagesDiv = document.getElementById('chat-messages');
+  const contactoEl = document.createElement('div');
+  contactoEl.className = 'chat-menu';
+  contactoEl.innerHTML = `
+    <a href="https://wa.me/${WA_NUMBER}?text=Estoy%20interesado%20en%20RedNatura" target="_blank" class="menu-btn">💬 WhatsApp</a>
+    <a href="mailto:fabiola250204@gmail.com?subject=Consulta RedNatura" class="menu-btn">📧 Email</a>
+  `;
+  messagesDiv.appendChild(contactoEl);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function mostrarOfertas() {
+  addMessage('🎁 **DESCUENTO 30% en productos mayores a $350**\n\n✨ OFERTA POR TIEMPO LIMITADO ✨\n\n¡Al inscribirse hoy obtendrás este increíble descuento!\n\nVe a la sección de Productos para ver todo.', 'bot');
+  const messagesDiv = document.getElementById('chat-messages');
+  const ofertasEl = document.createElement('div');
+  ofertasEl.className = 'chat-menu';
+  ofertasEl.innerHTML = `<button class="menu-btn" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'}); toggleChat();">🛍️ Ver Productos</button>`;
+  messagesDiv.appendChild(ofertasEl);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
@@ -128,60 +210,7 @@ function handleChatInput(event) {
   if (event.key === 'Enter') sendMessage();
 }
 
-function sendMessage() {
-  const input = document.getElementById('chat-input');
-  const mensaje = input.value.trim();
-  if (!mensaje) return;
-  mostrarMensajeUsuario(mensaje);
-  input.value = '';
-
-  if (estado === 'esperando_estado') {
-    procesarUbicacion(mensaje);
-  }
-}
-
-function abrirModalRegistro(producto) {
-  const modal = document.getElementById('registro-modal');
-  modal.classList.remove('hidden');
-  modal.classList.add('show');
-
-  const form = document.getElementById('registro-form');
-  form.onsubmit = function(e) {
-    e.preventDefault();
-    const nombre = document.getElementById('nombre').value;
-    const apellidoPaterno = document.getElementById('apellido-paterno').value;
-    const apellidoMaterno = document.getElementById('apellido-materno').value;
-    const celular = document.getElementById('celular').value;
-    const nacimiento = document.getElementById('nacimiento').value;
-    const fechaNacimiento = document.getElementById('fecha-nacimiento').value;
-
-    enviarWhatsAppRegistro({ nombre, apellidoPaterno, apellidoMaterno, celular, nacimiento, fechaNacimiento, producto });
-    cerrarRegistro();
-  };
-}
-
-function cerrarRegistro() {
-  const modal = document.getElementById('registro-modal');
-  modal.classList.add('hidden');
-  modal.classList.remove('show');
-}
-
-function enviarWhatsAppRegistro(datos) {
-  const numeroCliente = "5555070734";
-  const mensaje = encodeURIComponent(
-    `Hola ${datos.nombre} ${datos.apellidoPaterno} ${datos.apellidoMaterno}, gracias por registrarte en RedNatura.
-Tel: ${datos.celular}
-Lugar de nacimiento: ${datos.nacimiento}
-Fecha de nacimiento: ${datos.fechaNacimiento}
-Sucursal/Producto: ${datos.producto?.nombre || ''}.
-✅ Hemos recibido tu registro y pronto nos pondremos en contacto contigo.`
-  );
-
-  const url = `https://wa.me/52${numeroCliente}?text=${mensaje}`;
-  window.open(url, '_blank');
-
-  const mailto = `mailto:fabiola250204@gmail.com?subject=Nuevo registro RedNatura&body=${mensaje}`;
-  window.open(mailto, '_blank');
-}
-
+document.addEventListener('DOMContentLoaded', () => {
+  // Chat inicia cuando se abre
+});
 
