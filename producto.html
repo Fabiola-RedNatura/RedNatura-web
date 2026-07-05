@@ -111,8 +111,8 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
           <!-- Imagen izquierda -->
           <div style="text-align: center;">
-            <img src="${prod.imagen}" alt="${prod.nombre}" style="max-width: 100%; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);" onerror="this.src='img/placeholder.png'">
-            ${tieneDescuento ? `<p style="margin-top: 2rem; background: linear-gradient(135deg, #ffd89b 0%, #fff5d0 100%); color: #d84315; padding: 1rem; border-radius: 8px; font-weight: bold; border: 2px solid #ff9800;">💚 Presenta tu tarjeta en sucursal para obtener 30% DESC</p>` : ''}
+            <img src="${prod.imagen}" alt="${prod.nombre}" style="max-width: 100%; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); object-fit:contain;" onerror="this.src='img/placeholder.png'">
+            ${tieneDescuento ? `<p style="margin-top: 2rem; background: linear-gradient(135deg, #ffd89b 0%, #fff5d0 100%); color: #d84315; padding: 1rem; border-radius: 8px; font-weight: bold;">💚 30% OFF - Oferta por tiempo limitado</p>` : ''}
           </div>
 
           <!-- Detalles derecha -->
@@ -130,8 +130,10 @@
               ${tieneDescuento ? `<p style="font-size: 1.3rem; color: #27ae60; font-weight: bold;">💚 Con 30% DESC: $${precioDescuento.toLocaleString('es-MX')}</p>` : ''}
             </div>
 
-            <button class="btn-producto" onclick="abrirModalRegistro('Producto', '${prod.nombre}')" style="width: calc(100% - 3rem); padding: 1rem; font-size: 1.1rem; margin-bottom: 1rem; background: #27ae60; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;" onmouseenter="this.style.background='#229954'" onmouseleave="this.style.background='#27ae60'">😊 Estoy Interesado</button>
-            <a href="https://wa.me/5555070734?text=Estoy%20interesado%20en%20${encodeURIComponent(prod.nombre)}%20-%20$${prod.precio}" target="_blank" class="btn-whatsapp" style="width: calc(100% - 2rem); display: block; padding: 1rem; text-align: center; background: #25d366; color: white; border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 1rem;" onmouseenter="this.style.background='#1da851'" onmouseleave="this.style.background='#25d366'">📱 WhatsApp</a>
+            <div style="display:flex;gap:8px;flex-direction:column;">
+              <button class="btn" onclick="window.location.href='contacto.html?producto=${encodeURIComponent(prod.nombre)}&precio=${encodeURIComponent(prod.precio)}'" style="width:100%; padding: 1rem; font-size: 1.1rem; margin-bottom: 0.5rem;">💚 Estoy interesado</button>
+              <a href="https://wa.me/5555070734?text=Estoy%20interesado%20en%20${encodeURIComponent(prod.nombre)}%20-%20$${prod.precio}" target="_blank" class="btn btn-whatsapp" style="text-align:center; padding:1rem;">💬 Consultar por WhatsApp</a>
+            </div>
           </div>
         </div>
 
@@ -160,11 +162,11 @@
       `;
 
       // Establecer el tipo de producto en el formulario
-      document.getElementById('tipo').value = prod.nombre;
+      const tipoInput = document.getElementById('tipo');
+      if (tipoInput) tipoInput.value = prod.nombre;
     } else {
       detalleDiv.innerHTML = "<p style='text-align: center; color: #666; padding: 2rem;'>Producto no encontrado.</p>";
     }
   </script>
 </body>
 </html>
-
