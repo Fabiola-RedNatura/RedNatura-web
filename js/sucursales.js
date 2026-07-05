@@ -42,7 +42,6 @@ const sucursales = [
   { id: 41, nombre: "León", estado: "Guanajuato" }
 ];
 
-// Estados únicos para el chatbot
 const estados = [
   "Campeche", "Quintana Roo", "Tabasco", "Chihuahua", "Sonora", "Edomex",
   "Veracruz", "Chiapas", "CDMX", "Sinaloa", "Guanajuato", "Yucatán",
@@ -50,30 +49,46 @@ const estados = [
   "Puebla", "Jalisco", "Querétaro", "Tamaulipas", "San Luis Potosí"
 ];
 
-// Función para cargar sucursales
-function cargarSucursales() {
+// cargarSucursales(renderDedicado = false): si renderDedicado true, utiliza layout ancho
+function cargarSucursales(renderDedicado = false) {
   const grid = document.getElementById('sucursales-grid');
   if (!grid) return;
-  
   grid.innerHTML = '';
 
   sucursales.forEach(sucursal => {
+    const nombre = sucursal.nombre || 'Sucursal';
+    const estado = sucursal.estado || 'Estado no especificado';
+
     const card = document.createElement('div');
     card.className = 'sucursal-card';
 
-    card.innerHTML = `
-      <h3>📍 ${sucursal.nombre}</h3>
-      <p><strong>${sucursal.estado}</strong></p>
-      <div style="margin-top: 1.5rem;">
-        <a href="https://wa.me/5555070734?text=Estoy%20interesado%20en%20la%20sucursal%20de%20${encodeURIComponent(sucursal.nombre)}" target="_blank" class="btn-contacto" style="display: block; width: 100%;">💬 Estoy Interesado</a>
-      </div>
-    `;
+    const waText = encodeURIComponent(`Estoy interesado en la sucursal de ${nombre} (${estado})`);
+    const waHref = `https://wa.me/52${'5555070734'}?text=${waText}`;
+
+    if (renderDedicado) {
+      card.innerHTML = `
+        <h3>📍 ${nombre}</h3>
+        <p><strong>${estado}</strong></p>
+        <p class="horario">Horario: Lunes a Viernes 9am - 7pm, Sábados 9am - 2pm</p>
+        <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+          <a class="btn" href="${waHref}" target="_blank" rel="noopener">💬 Consultar por WhatsApp</a>
+          <a class="btn btn-outline" href="contacto.html?producto=${encodeURIComponent('Sucursal ' + nombre)}">📩 Pedir información</a>
+        </div>
+      `;
+    } else {
+      card.innerHTML = `
+        <h3>📍 ${nombre}</h3>
+        <p><strong>${estado}</strong></p>
+        <div style="margin-top:8px;">
+          <a class="btn" href="${waHref}" target="_blank" rel="noopener">💬 WhatsApp</a>
+        </div>
+      `;
+    }
 
     grid.appendChild(card);
   });
 }
 
-// Función para encontrar sucursal por estado
 function encontrarSucursalesPorEstado(estado) {
   return sucursales.filter(s => s.estado === estado);
 }
