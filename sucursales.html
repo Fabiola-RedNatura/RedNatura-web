@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sucursales — RedNatura</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo">
+        <img src="img/logo.png" alt="RedNatura" class="logo-img">
+        <div class="logo-text">🌿 RedNatura</div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#productos">Productos</a></li>
+        <li><a href="sucursales.html">Sucursales</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="sucursales" role="main">
+    <div class="container">
+      <h2>Nuestras Sucursales</h2>
+      <p>Visítanos en cualquiera de nuestras ubicaciones. Haz clic en una sucursal para más información.</p>
+      <div id="sucursales-grid" class="sucursales-grid"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 RedNatura - Todos los derechos reservados</p>
+  </footer>
+
+  <script src="js/sucursales.js"></script>
+  <script>
+    // Al cargar la página mostramos todas las sucursales
+    document.addEventListener('DOMContentLoaded', () => {
+      cargarSucursales();
+    });
+  </script>
+</body>
+</html>
