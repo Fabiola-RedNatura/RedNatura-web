@@ -16,7 +16,7 @@
       <ul class="nav-links">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="index.html#productos">Productos</a></li>
-        <li><a href="sucursales.html">Sucursales</a></li>
+        <li><a href="sucursales.html" aria-current="page">Sucursales</a></li>
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
     </div>
@@ -24,8 +24,9 @@
 
   <main class="sucursales" role="main">
     <div class="container">
-      <h2>Nuestras Sucursales</h2>
-      <p>Visítanos en cualquiera de nuestras ubicaciones. Haz clic en una sucursal para más información.</p>
+      <h2>Todas nuestras Sucursales</h2>
+      <p>Encuentra la sucursal más cercana a ti. Haz clic en una para más información o contáctala por WhatsApp.</p>
+
       <div id="sucursales-grid" class="sucursales-grid"></div>
     </div>
   </main>
@@ -36,10 +37,7 @@
 
   <script src="js/sucursales.js"></script>
   <script>
-    // Al cargar la página mostramos todas las sucursales
-    document.addEventListener('DOMContentLoaded', () => {
-      cargarSucursales();
-    });
+    document.addEventListener('DOMContentLoaded', () => cargarSucursales(true));
   </script>
 </body>
 </html>
